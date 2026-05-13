@@ -12,7 +12,7 @@ versions are not actively maintained.
 Instead, please use one of the private channels below:
 
 1. **Preferred:** [GitHub Security Advisories](https://github.com/MSK-Scripts/msk-paste/security/advisories/new)
-2. **Email:** `moritz.kohm@gmail.com` (PGP available on request)
+2. **Email:** `info@msk-scripts.de` (PGP available on request)
 
 Include:
 
