@@ -1,7 +1,8 @@
 import { z } from 'zod'
 import { SUPPORTED_LANGUAGES } from './languages'
+import { envInt } from './env'
 
-const MAX_CONTENT_BYTES = Number(process.env.MAX_PASTE_SIZE_BYTES ?? 1_048_576) // 1 MB
+const MAX_CONTENT_BYTES = envInt('MAX_PASTE_SIZE_BYTES', 1_048_576) // 1 MB
 
 export const EXPIRES_IN_VALUES = ['10min', '1h', '1d', '1w', '1mo', '1y'] as const
 export type ExpiresInLiteral = (typeof EXPIRES_IN_VALUES)[number]

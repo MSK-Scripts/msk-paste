@@ -1,4 +1,5 @@
 import { createHash } from 'crypto'
+import { envInt } from './env'
 
 // ─── In-memory rate limit (suitable for single-server setups) ─────────
 // For multi-instance deployments Redis would be better, but a single
@@ -80,7 +81,7 @@ export function checkRateLimit(
  * Convenience wrapper for paste creation.
  */
 export function checkCreateRateLimit(ipHash: string) {
-  const limit  = Number(process.env.RATE_LIMIT_CREATE_PER_HOUR ?? 10)
+  const limit  = envInt('RATE_LIMIT_CREATE_PER_HOUR', 10)
   const window = 60 * 60 * 1000 // 1 hour
   return checkRateLimit(`create:${ipHash}`, limit, window)
 }

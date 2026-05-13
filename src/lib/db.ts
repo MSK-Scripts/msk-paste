@@ -1,4 +1,5 @@
 import mysql from 'mysql2/promise'
+import { envInt } from './env'
 
 // ─── ENV validation (lazy) ────────────────────────────────────────
 const REQUIRED_ENV = ['DB_HOST', 'DB_USER', 'DB_PASSWORD', 'DB_NAME'] as const
@@ -44,7 +45,7 @@ export function getPool(): mysql.Pool {
 
   pool = mysql.createPool({
     host:     process.env.DB_HOST,
-    port:     Number(process.env.DB_PORT ?? 3306),
+    port:     envInt('DB_PORT', 3306),
     user:     process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
