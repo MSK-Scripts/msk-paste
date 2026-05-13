@@ -11,8 +11,9 @@ const EXPIRES_IN_OPTIONS: ExpiresIn[] = ['10min', '1h', '1d', '1w', '1mo', '1y']
 const DEFAULT_EXPIRES: ExpiresIn = '1w'
 
 export function CreatePasteForm() {
-  const t  = useTranslations('createForm')
-  const tl = useTranslations('languages')
+  const t       = useTranslations('createForm')
+  const tCommon = useTranslations('common')
+  const tl      = useTranslations('languages')
 
   // ─── State ──────────────────────────────────────────────────────
   const [content,       setContent]       = useState('')
@@ -101,7 +102,7 @@ export function CreatePasteForm() {
       <div>
         <label htmlFor="title" className="block text-sm font-medium text-msk-text mb-2">
           {t('titleLabel')}{' '}
-          <span className="text-msk-muted font-normal">({t('optional' as never) || 'optional'})</span>
+          <span className="text-msk-muted font-normal">({tCommon('optional')})</span>
         </label>
         <input
           id="title"
@@ -203,7 +204,7 @@ export function CreatePasteForm() {
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-msk-text mb-2">
               {t('passwordLabel')}{' '}
-              <span className="text-msk-muted font-normal">(optional)</span>
+              <span className="text-msk-muted font-normal">({tCommon('optional')})</span>
             </label>
             <div className="relative">
               <input
@@ -265,7 +266,7 @@ export function CreatePasteForm() {
           <div>
             <label htmlFor="customId" className="block text-sm font-medium text-msk-text mb-2">
               {t('customIdLabel')}{' '}
-              <span className="text-msk-muted font-normal">(optional)</span>
+              <span className="text-msk-muted font-normal">({tCommon('optional')})</span>
             </label>
             <div className="flex items-stretch">
               <span className="px-3 inline-flex items-center bg-msk-surface2 border border-r-0 border-msk-border rounded-l-lg text-sm text-msk-muted font-mono">
