@@ -13,7 +13,7 @@ CREATE TABLE pastes (
   expires_at      DATETIME        NOT NULL,
   burn_after_read TINYINT(1)      NOT NULL DEFAULT 0,
   view_count      INT UNSIGNED    NOT NULL DEFAULT 0,
-  delete_token    VARCHAR(64)     NOT NULL UNIQUE,
+  delete_token    VARCHAR(80)     NOT NULL UNIQUE,
   size_bytes      INT UNSIGNED    NOT NULL,
   created_at      DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
   created_ip_hash VARBINARY(32)   NOT NULL,
