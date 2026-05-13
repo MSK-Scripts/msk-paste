@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800;900&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+:root {
+  --font-dm-sans:   'DM Sans', sans-serif;
+  --font-syne:      'Syne', sans-serif;
+  --font-jetbrains: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-dm-sans);
+  background:  #1b1b1d;
+  color:       #e3e3e3;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar (MSK style) */
+::-webkit-scrollbar {
+  width:  4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background:    rgba(94, 177, 49, 0.3);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(94, 177, 49, 0.5);
+}
+
+/* Selection */
+::selection {
+  background: rgba(94, 177, 49, 0.4);
+  color:      #ffffff;
+}
+
+/* Focus ring */
+:focus-visible {
+  outline:        2px solid #5eb131;
+  outline-offset: 2px;
+}
+
+/* Heading utility */
+.font-heading {
+  font-family: var(--font-syne);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+/* Shiki — host theme styles for highlighted code */
+.shiki-wrap pre.shiki {
+  margin: 0;
+  padding: 1rem 1.25rem;
+  background: transparent !important;
+  font-family: var(--font-jetbrains);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  overflow: auto;
+}
+
+.shiki-wrap pre.shiki code {
+  display: grid;
+  counter-reset: step;
+  counter-increment: step 0;
+}
+
+.shiki-wrap.line-numbers pre.shiki code .line::before {
+  content: counter(step);
+  counter-increment: step;
+  width: 2.5rem;
+  margin-right: 1.25rem;
+  display: inline-block;
+  text-align: right;
+  color: rgba(141, 144, 150, 0.55);
+  user-select: none;
+}
+
+.shiki-wrap.no-wrap pre.shiki {
+  white-space: pre;
+}
+.shiki-wrap.wrap pre.shiki {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Toast (no external library) */
+.msk-toast {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #242526;
+  color: #e3e3e3;
+  border: 1px solid #5eb131;
+  border-radius: 8px;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  animation: toastIn 0.3s ease-out, toastOut 0.3s ease-in 1.8s forwards;
+  z-index: 60;
+  pointer-events: none;
+}
+@keyframes toastIn {
+  from { opacity: 0; transform: translate(-50%, 10px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
+@keyframes toastOut {
+  from { opacity: 1; }
+  to   { opacity: 0; transform: translate(-50%, -10px); }
+}

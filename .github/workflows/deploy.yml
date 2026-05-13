@@ -1,0 +1,92 @@
+name: Deploy MSK Paste
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      # ── 1. Checkout ──────────────────────────────────────────
+      - name: ⬇️ Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      # ── 2. Node.js ───────────────────────────────────────────
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+          cache: npm
+
+      # ── 3. Install ───────────────────────────────────────────
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      # ── 4. Build ─────────────────────────────────────────────
+      # NEXT_PUBLIC_* must be available at build time.
+      # DB_* are dummies so the build can complete – real values
+      # live at runtime in /opt/msk-paste/.env on the server.
+      - name: 🏗️ Build
+        env:
+          NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
+          DB_HOST:        build-dummy
+          DB_USER:        build-dummy
+          DB_PASSWORD:    build-dummy
+          DB_NAME:        build-dummy
+          IP_HASH_SECRET: build-dummy-secret-do-not-use
+        run: npm run build
+
+      # ── 5. Deploy via SCP ────────────────────────────────────
+      - name: 🚀 Deploy to server
+        uses: appleboy/scp-action@v1.0.0
+        with:
+          host:     ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          key:      ${{ secrets.SSH_PRIVATE_KEY }}
+          port:     ${{ secrets.FTP_PORT }}
+          source:   ".next/,public/,migrations/,messages/,scripts/,src/,package.json,package-lock.json,next.config.ts,tsconfig.json,msk-paste.service"
+          target:   /opt/msk-paste/
+
+      # ── 6. Server setup ──────────────────────────────────────
+      - name: 🛠️ Install production deps, run migrations, restart
+        uses: appleboy/ssh-action@v1.2.5
+        with:
+          host:     ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          key:      ${{ secrets.SSH_PRIVATE_KEY }}
+          port:     ${{ secrets.FTP_PORT }}
+          script: |
+            cd /opt/msk-paste
+
+            # Stop the service before touching node_modules
+            systemctl stop msk-paste || true
+
+            # Clean install
+            rm -rf /opt/msk-paste/node_modules
+            npm ci --omit=dev
+            npm install --no-save tsx
+
+            # Run migrations
+            npm run migrate
+
+            # Fix permissions
+            chown -R musiker15:musiker15 /opt/msk-paste/
+            chmod -R u+w /opt/msk-paste/.next/
+            chmod 600 /opt/msk-paste/.env
+
+            # Reload service file if it changed
+            cp /opt/msk-paste/msk-paste.service /etc/systemd/system/msk-paste.service
+            systemctl daemon-reload
+
+            # Restart
+            systemctl restart msk-paste
+            systemctl status msk-paste --no-pager

@@ -1,0 +1,43 @@
+# ============================================================================
+# MSK Paste – systemd Service Unit
+#
+# This file lives in the repo root and is copied by GitHub Actions to
+# /etc/systemd/system/msk-paste.service during deployment.
+# ============================================================================
+
+[Unit]
+Description=MSK Paste – Self-hosted Pastebin
+Documentation=https://github.com/MSK-Scripts/msk-paste
+After=network.target mariadb.service
+Wants=mariadb.service
+
+[Service]
+Type=simple
+User=musiker15
+Group=musiker15
+WorkingDirectory=/opt/msk-paste
+
+# ─── Environment ─────────────────────────────────────────────────────
+Environment=NODE_ENV=production
+EnvironmentFile=/opt/msk-paste/.env
+
+# ─── Start command ───────────────────────────────────────────────────
+ExecStart=/usr/bin/npm start
+
+# ─── Restart behaviour ───────────────────────────────────────────────
+Restart=on-failure
+RestartSec=10
+StartLimitBurst=5
+StartLimitIntervalSec=60
+
+# ─── Logging to journald ─────────────────────────────────────────────
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=msk-paste
+
+# ─── Resource limits ─────────────────────────────────────────────────
+LimitNOFILE=4096
+LimitNPROC=512
+
+[Install]
+WantedBy=multi-user.target

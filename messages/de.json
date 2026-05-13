@@ -1,0 +1,215 @@
+{
+  "common": {
+    "back": "Zurück",
+    "copy": "Kopieren",
+    "copied": "Kopiert!",
+    "loading": "Lädt…",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "download": "Download",
+    "open": "Öffnen",
+    "view": "Ansehen",
+    "raw": "Roh",
+    "submit": "Absenden",
+    "optional": "optional"
+  },
+  "header": {
+    "createNew": "Neue Paste",
+    "stats": "Statistik",
+    "docs": "Dokumentation",
+    "github": "GitHub"
+  },
+  "footer": {
+    "openSource": "Open Source unter AGPL-3.0",
+    "privacy": "Datenschutz",
+    "byBrand": "von MSK Scripts"
+  },
+  "home": {
+    "title": "MSK Paste",
+    "subtitle": "Selbst-gehosteter Pastebin mit Syntax-Highlighting"
+  },
+  "createForm": {
+    "contentLabel": "Inhalt",
+    "contentPlaceholder": "Füge deinen Code oder Text hier ein…",
+    "titleLabel": "Titel",
+    "titlePlaceholder": "z. B. „Auth Middleware Snippet“",
+    "languageLabel": "Sprache",
+    "expirationLabel": "Ablaufdatum",
+    "expiration": {
+      "10min": "10 Minuten",
+      "1h": "1 Stunde",
+      "1d": "1 Tag",
+      "1w": "1 Woche",
+      "1mo": "1 Monat",
+      "1y": "1 Jahr"
+    },
+    "passwordLabel": "Passwort",
+    "passwordPlaceholder": "Optionales Passwort",
+    "burnLabel": "Nach erstem Aufruf löschen",
+    "burnHint": "Die Paste wird nach dem ersten Aufruf unwiderruflich entfernt.",
+    "customIdLabel": "Eigene Paste-ID",
+    "customIdPlaceholder": "z. B. mein-snippet",
+    "customIdHint": "4–32 Zeichen, nur Buchstaben/Ziffern/„_“/„-“",
+    "advancedToggle": "Erweiterte Optionen",
+    "submit": "Paste erstellen",
+    "submitting": "Wird erstellt…",
+    "networkError": "Netzwerkfehler – bitte erneut versuchen",
+    "sizeUsed": "{bytes} / {max} Bytes"
+  },
+  "result": {
+    "title": "Paste erstellt",
+    "urlLabel": "Paste-URL",
+    "rawUrlLabel": "Raw-URL",
+    "deleteTokenLabel": "Lösch-Token",
+    "deleteTokenHint": "Speichere diesen Token sicher – nur damit kannst du die Paste vorzeitig löschen.",
+    "createAnother": "Weitere Paste erstellen"
+  },
+  "viewPaste": {
+    "title": "Paste anzeigen",
+    "createdAt": "Erstellt am {date}",
+    "expiresAt": "Läuft ab am {date}",
+    "burnAfterRead": "Wird nach diesem Aufruf gelöscht",
+    "views": "{count, plural, =1 {# Aufruf} other {# Aufrufe}}",
+    "language": "Sprache",
+    "size": "Größe",
+    "bytes": "{bytes} Bytes",
+    "copyContent": "Inhalt kopieren",
+    "copyUrl": "URL kopieren",
+    "lineNumbers": "Zeilennummern",
+    "wordWrap": "Zeilenumbruch",
+    "deletePaste": "Paste löschen"
+  },
+  "deletePaste": {
+    "title": "Paste löschen",
+    "tokenLabel": "Lösch-Token",
+    "tokenPlaceholder": "dk_…",
+    "submit": "Endgültig löschen",
+    "submitting": "Wird gelöscht…",
+    "successTitle": "Paste gelöscht",
+    "successText": "Die Paste wurde dauerhaft entfernt.",
+    "errorInvalidToken": "Ungültiger Token oder Paste nicht gefunden",
+    "errorNetwork": "Netzwerkfehler – bitte erneut versuchen"
+  },
+  "password": {
+    "title": "Passwort erforderlich",
+    "subtitle": "Diese Paste ist passwortgeschützt.",
+    "label": "Passwort",
+    "submit": "Entsperren",
+    "submitting": "Prüfe…",
+    "wrong": "Falsches Passwort",
+    "showPassword": "Passwort anzeigen",
+    "hidePassword": "Passwort verbergen"
+  },
+  "expired": {
+    "title": "Paste abgelaufen",
+    "subtitle": "Diese Paste ist nicht mehr verfügbar."
+  },
+  "burned": {
+    "title": "Paste verbraucht",
+    "subtitle": "Diese „Burn after read“-Paste wurde bereits geöffnet und unwiderruflich gelöscht."
+  },
+  "notFound": {
+    "title": "Paste nicht gefunden",
+    "subtitle": "Die angeforderte Paste existiert nicht oder wurde gelöscht.",
+    "backHome": "Zurück zur Startseite"
+  },
+  "stats": {
+    "title": "Statistik",
+    "subtitle": "Globale Auswertung über alle Pastes.",
+    "totalPastes": "Pastes insgesamt",
+    "pastesToday": "Heute",
+    "pastesThisWeek": "Diese Woche",
+    "topLanguages": "Top-Sprachen",
+    "noData": "Noch keine Daten verfügbar"
+  },
+  "privacy": {
+    "title": "Datenschutzerklärung",
+    "lastUpdated": "Stand: {date}",
+    "intro": {
+      "title": "1. Einleitung",
+      "text": "Diese Datenschutzerklärung informiert dich darüber, wie MSK Paste deine Daten verarbeitet. Wir verfolgen ein Privacy-First-Prinzip: Es werden so wenig Daten wie technisch nötig erhoben."
+    },
+    "controller": {
+      "title": "2. Verantwortlicher",
+      "text": "Verantwortlich im Sinne der DSGVO ist:\nMoritz Kohm – MSK Scripts\nHauptstraße 103\n68535 Edingen-Neckarhausen\nDeutschland\nE-Mail: moritz.kohm@gmail.com"
+    },
+    "data": {
+      "title": "3. Verarbeitete Daten",
+      "text": "Beim Erstellen einer Paste werden folgende Daten gespeichert:\n• der von dir eingegebene Inhalt\n• optional ein Titel\n• die ausgewählte Programmiersprache\n• optional ein bcrypt-Hash deines Passworts\n• Ablaufdatum und „Burn after read“-Flag\n• ein automatisch generierter Lösch-Token\n• die Paste-Größe in Bytes\n• Erstellungszeitpunkt\n• ein HMAC-SHA-256-Hash deiner IP-Adresse für das Rate-Limit (DSGVO-konform)\n\nDie ursprüngliche IP-Adresse wird nicht gespeichert und kann aus dem Hash nicht rekonstruiert werden."
+    },
+    "cookies": {
+      "title": "4. Cookies",
+      "text": "Wir setzen ein einziges Cookie: NEXT_LOCALE speichert deine Sprachauswahl (DE/EN) für 12 Monate. Es ist technisch notwendig und nicht zur Werbung oder Analyse gedacht."
+    },
+    "tracking": {
+      "title": "5. Kein Tracking",
+      "text": "Es werden keine Analyse-Tools (Google Analytics, Plausible, Matomo o. ä.) verwendet. Es findet keine GeoIP-Auflösung statt. Es werden keine Drittanbieter-Skripte geladen."
+    },
+    "retention": {
+      "title": "6. Speicherdauer",
+      "text": "Pastes werden nach Ablauf des gewählten Zeitraums automatisch und unwiderruflich gelöscht. „Burn after read“-Pastes werden direkt nach dem ersten Aufruf entfernt. Du kannst eine Paste jederzeit mit deinem Lösch-Token vorzeitig löschen.\n\nIP-Hashes für Rate-Limiting werden nur kurzzeitig im Arbeitsspeicher gehalten und automatisch nach 1 Stunde verworfen."
+    },
+    "rights": {
+      "title": "7. Deine Rechte",
+      "text": "Du hast nach DSGVO das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch. Wende dich dafür bitte per E-Mail an den Verantwortlichen.\n\nDa wir keine Konten speichern, ist eine Identifizierung außerhalb der bei der jeweiligen Paste hinterlegten Daten allerdings nicht möglich."
+    },
+    "security": {
+      "title": "8. Sicherheit",
+      "text": "Passwörter werden ausschließlich als bcrypt-Hash (Cost-Faktor 12) gespeichert. Die Verbindung erfolgt verschlüsselt via HTTPS. Der Server ist mit aktuellen Sicherheits-Updates versehen, eine Firewall ist aktiv."
+    },
+    "thirdParty": {
+      "title": "9. Drittanbieter",
+      "text": "Schriftarten (Syne, DM Sans, JetBrains Mono) werden von Google Fonts geladen. Dabei wird deine IP-Adresse an Google übermittelt. Es werden keine Cookies gesetzt."
+    },
+    "contact": {
+      "title": "10. Kontakt",
+      "text": "Fragen zum Datenschutz beantworten wir gerne per E-Mail: moritz.kohm@gmail.com"
+    }
+  },
+  "languages": {
+    "plaintext": "Reiner Text",
+    "bash": "Bash",
+    "shell": "Shell",
+    "powershell": "PowerShell",
+    "c": "C",
+    "cpp": "C++",
+    "csharp": "C#",
+    "go": "Go",
+    "java": "Java",
+    "kotlin": "Kotlin",
+    "rust": "Rust",
+    "swift": "Swift",
+    "javascript": "JavaScript",
+    "typescript": "TypeScript",
+    "jsx": "JSX",
+    "tsx": "TSX",
+    "python": "Python",
+    "ruby": "Ruby",
+    "php": "PHP",
+    "perl": "Perl",
+    "html": "HTML",
+    "css": "CSS",
+    "scss": "SCSS",
+    "sass": "Sass",
+    "json": "JSON",
+    "yaml": "YAML",
+    "toml": "TOML",
+    "xml": "XML",
+    "sql": "SQL",
+    "graphql": "GraphQL",
+    "markdown": "Markdown",
+    "dockerfile": "Dockerfile",
+    "lua": "Lua",
+    "diff": "Diff"
+  },
+  "errors": {
+    "generic": "Etwas ist schiefgelaufen.",
+    "network": "Netzwerkfehler – bitte erneut versuchen.",
+    "rateLimit": "Zu viele Anfragen – versuche es später erneut.",
+    "tooLarge": "Inhalt ist zu groß (max. 1 MB).",
+    "invalidCustomId": "Ungültige Paste-ID.",
+    "reservedId": "Diese Paste-ID ist reserviert.",
+    "idConflict": "Diese Paste-ID ist bereits vergeben.",
+    "invalidPassword": "Falsches Passwort."
+  }
+}

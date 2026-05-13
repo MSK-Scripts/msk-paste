@@ -1,0 +1,215 @@
+{
+  "common": {
+    "back": "Back",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "loading": "Loading…",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "download": "Download",
+    "open": "Open",
+    "view": "View",
+    "raw": "Raw",
+    "submit": "Submit",
+    "optional": "optional"
+  },
+  "header": {
+    "createNew": "New paste",
+    "stats": "Stats",
+    "docs": "Docs",
+    "github": "GitHub"
+  },
+  "footer": {
+    "openSource": "Open source under AGPL-3.0",
+    "privacy": "Privacy",
+    "byBrand": "by MSK Scripts"
+  },
+  "home": {
+    "title": "MSK Paste",
+    "subtitle": "Self-hosted pastebin with syntax highlighting"
+  },
+  "createForm": {
+    "contentLabel": "Content",
+    "contentPlaceholder": "Paste your code or text here…",
+    "titleLabel": "Title",
+    "titlePlaceholder": "e.g. \"Auth middleware snippet\"",
+    "languageLabel": "Language",
+    "expirationLabel": "Expiration",
+    "expiration": {
+      "10min": "10 minutes",
+      "1h": "1 hour",
+      "1d": "1 day",
+      "1w": "1 week",
+      "1mo": "1 month",
+      "1y": "1 year"
+    },
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Optional password",
+    "burnLabel": "Delete after first view",
+    "burnHint": "The paste will be wiped after the first successful view.",
+    "customIdLabel": "Custom paste ID",
+    "customIdPlaceholder": "e.g. my-snippet",
+    "customIdHint": "4–32 characters, letters, digits, “_” or “-” only",
+    "advancedToggle": "Advanced options",
+    "submit": "Create paste",
+    "submitting": "Creating…",
+    "networkError": "Network error – please try again",
+    "sizeUsed": "{bytes} / {max} bytes"
+  },
+  "result": {
+    "title": "Paste created",
+    "urlLabel": "Paste URL",
+    "rawUrlLabel": "Raw URL",
+    "deleteTokenLabel": "Delete token",
+    "deleteTokenHint": "Store this token safely – it is the only way to delete the paste early.",
+    "createAnother": "Create another paste"
+  },
+  "viewPaste": {
+    "title": "View paste",
+    "createdAt": "Created at {date}",
+    "expiresAt": "Expires at {date}",
+    "burnAfterRead": "Will be deleted after this view",
+    "views": "{count, plural, =1 {# view} other {# views}}",
+    "language": "Language",
+    "size": "Size",
+    "bytes": "{bytes} bytes",
+    "copyContent": "Copy content",
+    "copyUrl": "Copy URL",
+    "lineNumbers": "Line numbers",
+    "wordWrap": "Word wrap",
+    "deletePaste": "Delete paste"
+  },
+  "deletePaste": {
+    "title": "Delete paste",
+    "tokenLabel": "Delete token",
+    "tokenPlaceholder": "dk_…",
+    "submit": "Permanently delete",
+    "submitting": "Deleting…",
+    "successTitle": "Paste deleted",
+    "successText": "The paste has been permanently removed.",
+    "errorInvalidToken": "Invalid token or paste not found",
+    "errorNetwork": "Network error – please try again"
+  },
+  "password": {
+    "title": "Password required",
+    "subtitle": "This paste is password protected.",
+    "label": "Password",
+    "submit": "Unlock",
+    "submitting": "Checking…",
+    "wrong": "Wrong password",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password"
+  },
+  "expired": {
+    "title": "Paste expired",
+    "subtitle": "This paste is no longer available."
+  },
+  "burned": {
+    "title": "Paste consumed",
+    "subtitle": "This “burn after read” paste was already opened and permanently deleted."
+  },
+  "notFound": {
+    "title": "Paste not found",
+    "subtitle": "The requested paste does not exist or was deleted.",
+    "backHome": "Back to home"
+  },
+  "stats": {
+    "title": "Statistics",
+    "subtitle": "Global overview across all pastes.",
+    "totalPastes": "Total pastes",
+    "pastesToday": "Today",
+    "pastesThisWeek": "This week",
+    "topLanguages": "Top languages",
+    "noData": "No data available yet"
+  },
+  "privacy": {
+    "title": "Privacy policy",
+    "lastUpdated": "Last updated: {date}",
+    "intro": {
+      "title": "1. Introduction",
+      "text": "This privacy policy describes how MSK Paste processes your data. We follow a privacy-first approach: only the data strictly required for the service is collected."
+    },
+    "controller": {
+      "title": "2. Data controller",
+      "text": "Controller in the sense of the GDPR:\nMoritz Kohm – MSK Scripts\nHauptstraße 103\n68535 Edingen-Neckarhausen\nGermany\nEmail: moritz.kohm@gmail.com"
+    },
+    "data": {
+      "title": "3. Data we process",
+      "text": "When you create a paste, the following data is stored:\n• the content you entered\n• an optional title\n• the selected programming language\n• an optional bcrypt hash of your password\n• expiration date and the \"burn after read\" flag\n• an automatically generated delete token\n• the paste size in bytes\n• the creation timestamp\n• an HMAC-SHA-256 hash of your IP address for rate limiting (GDPR compliant)\n\nThe original IP address is never stored and cannot be reconstructed from the hash."
+    },
+    "cookies": {
+      "title": "4. Cookies",
+      "text": "We set exactly one cookie: NEXT_LOCALE stores your language preference (DE/EN) for 12 months. It is technically necessary and not used for advertising or analytics."
+    },
+    "tracking": {
+      "title": "5. No tracking",
+      "text": "No analytics tools (Google Analytics, Plausible, Matomo, …) are used. No GeoIP resolution happens. No third-party scripts are loaded."
+    },
+    "retention": {
+      "title": "6. Retention",
+      "text": "Pastes are automatically and permanently deleted after their chosen expiration window. \"Burn after read\" pastes are wiped immediately after the first successful view. You can delete a paste at any time using its delete token.\n\nIP hashes used for rate limiting are kept only briefly in memory and are automatically discarded after one hour."
+    },
+    "rights": {
+      "title": "7. Your rights",
+      "text": "Under the GDPR you have the right to information, rectification, deletion, restriction of processing, data portability, and objection. To exercise these rights, please contact the controller by email.\n\nBecause we store no accounts, identification beyond the data stored with the specific paste is not possible."
+    },
+    "security": {
+      "title": "8. Security",
+      "text": "Passwords are stored as bcrypt hashes (cost factor 12) only. All connections are encrypted via HTTPS. The server runs with current security updates and a firewall in place."
+    },
+    "thirdParty": {
+      "title": "9. Third parties",
+      "text": "Web fonts (Syne, DM Sans, JetBrains Mono) are loaded from Google Fonts. Your IP address is transmitted to Google for this purpose. No cookies are set."
+    },
+    "contact": {
+      "title": "10. Contact",
+      "text": "For privacy-related questions please email: moritz.kohm@gmail.com"
+    }
+  },
+  "languages": {
+    "plaintext": "Plain text",
+    "bash": "Bash",
+    "shell": "Shell",
+    "powershell": "PowerShell",
+    "c": "C",
+    "cpp": "C++",
+    "csharp": "C#",
+    "go": "Go",
+    "java": "Java",
+    "kotlin": "Kotlin",
+    "rust": "Rust",
+    "swift": "Swift",
+    "javascript": "JavaScript",
+    "typescript": "TypeScript",
+    "jsx": "JSX",
+    "tsx": "TSX",
+    "python": "Python",
+    "ruby": "Ruby",
+    "php": "PHP",
+    "perl": "Perl",
+    "html": "HTML",
+    "css": "CSS",
+    "scss": "SCSS",
+    "sass": "Sass",
+    "json": "JSON",
+    "yaml": "YAML",
+    "toml": "TOML",
+    "xml": "XML",
+    "sql": "SQL",
+    "graphql": "GraphQL",
+    "markdown": "Markdown",
+    "dockerfile": "Dockerfile",
+    "lua": "Lua",
+    "diff": "Diff"
+  },
+  "errors": {
+    "generic": "Something went wrong.",
+    "network": "Network error – please try again.",
+    "rateLimit": "Too many requests – please try again later.",
+    "tooLarge": "Content is too large (max 1 MB).",
+    "invalidCustomId": "Invalid paste ID.",
+    "reservedId": "This paste ID is reserved.",
+    "idConflict": "This paste ID is already in use.",
+    "invalidPassword": "Wrong password."
+  }
+}
