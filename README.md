@@ -138,8 +138,8 @@ please share your source code under the same license.
 
 ## 🙋 Support / contact
 
-Author: **Moritz Kohm — MSK Scripts**
-Email: `moritz.kohm@gmail.com`
+Author: **Musiker15 — MSK Scripts**
+Email: `info@msk-scripts.de`
 Website: [www.msk-scripts.de](https://www.msk-scripts.de)
 
 Issues and feature requests → [GitHub Issues](https://github.com/MSK-Scripts/msk-paste/issues)
