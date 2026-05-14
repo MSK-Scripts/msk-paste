@@ -67,6 +67,15 @@ export function getPool(): mysql.Pool {
     bigNumberStrings:  false,
   })
 
+  // mysql2 (de)serializes dates as UTC (timezone: '+00:00' above), but MariaDB's
+  // session time zone defaults to SYSTEM. Without forcing it, NOW() / CURDATE() /
+  // CURRENT_TIMESTAMP run in server-local time while stored dates are UTC — so
+  // expiry comparisons (stats, cleanup) and created_at drift apart by the
+  // server's UTC offset.
+  pool.on('connection', (connection) => {
+    connection.query("SET time_zone = '+00:00'")
+  })
+
   return pool
 }
 
