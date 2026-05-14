@@ -11,6 +11,11 @@ Documentation=https://github.com/MSK-Scripts/msk-paste
 After=network.target mariadb.service
 Wants=mariadb.service
 
+# ─── Restart rate limit ──────────────────────────────────────────────
+# StartLimit* belong in [Unit], not [Service] (modern systemd).
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
 [Service]
 Type=simple
 User=musiker15
@@ -27,8 +32,6 @@ ExecStart=/usr/bin/npm start
 # ─── Restart behaviour ───────────────────────────────────────────────
 Restart=on-failure
 RestartSec=10
-StartLimitBurst=5
-StartLimitIntervalSec=60
 
 # ─── Logging to journald ─────────────────────────────────────────────
 StandardOutput=journal
