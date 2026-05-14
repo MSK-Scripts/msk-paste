@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     { name: 'Musiker15',   url: 'https://www.musiker15.de' },
     { name: 'MSK Scripts', url: 'https://www.msk-scripts.de' },
   ],
-  keywords: ['Pastebin', 'Paste', 'Syntax highlighting', 'MSK', 'msk-scripts.de'],
+  keywords: ['Pastebin', 'Paste', 'Syntax highlighting', 'MSK', 'MSK Scripts', 'msk-scripts.de'],
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },
