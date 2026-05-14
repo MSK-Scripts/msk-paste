@@ -22,9 +22,10 @@ async function main() {
   console.log(`[${timestamp}] 🧹 MSK Paste – Cleanup job started`)
   console.log('─────────────────────────────────────────────────────')
 
-  // Count expired pastes BEFORE deleting (for reporting)
+  // expires_at is stored as UTC (mysql2 timezone: '+00:00'), so compare against
+  // UTC_TIMESTAMP() — independent of the MariaDB session time zone.
   const expired = await queryOne<{ count: number }>(
-    'SELECT COUNT(*) AS count FROM pastes WHERE expires_at < NOW()'
+    'SELECT COUNT(*) AS count FROM pastes WHERE expires_at < UTC_TIMESTAMP()'
   )
   const expectedCount = expired?.count ?? 0
 
@@ -35,7 +36,7 @@ async function main() {
   }
 
   const result = await execute(
-    'DELETE FROM pastes WHERE expires_at < NOW()'
+    'DELETE FROM pastes WHERE expires_at < UTC_TIMESTAMP()'
   )
 
   const duration = Date.now() - startedAt
