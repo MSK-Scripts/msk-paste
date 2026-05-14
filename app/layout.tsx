@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     siteName:    'MSK Paste',
     title:       'MSK Paste – Self-hosted Pastebin',
     description: 'A privacy-friendly self-hosted pastebin with syntax highlighting, expiration dates, password protection, and burn-after-read.',
-    images:      ['/logo.png'],
+    images:      ['/msk_paste.png'],
   },
 }
 
