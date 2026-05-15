@@ -1,6 +1,6 @@
 {
   "name": "msk-paste",
-  "version": "1.0.3",
+  "version": "1.0.0",
   "private": true,
   "license": "AGPL-3.0-or-later",
   "description": "MSK Paste — Self-hosted pastebin alternative with syntax highlighting, expiration, and password protection",
