@@ -18,6 +18,8 @@ export const RESERVED_PASTE_IDS = new Set<string>([
   'favicon.ico',
   'help',
   'home',
+  'imprint',
+  'impressum',
   'index',
   'legal',
   'login',

@@ -22,7 +22,26 @@
   "footer": {
     "openSource": "Open Source unter AGPL-3.0",
     "privacy": "Datenschutz",
+    "imprint": "Impressum",
     "byBrand": "von MSK Scripts"
+  },
+  "imprintPage": {
+    "title": "Impressum",
+    "section1Title": "Angaben gemäß § 5 DDG",
+    "addressName": "Moritz Kohm",
+    "addressLines": "c/o Impressumservice Dein-Impressum\nStettiner Str. 41\n35410 Hungen\nDeutschland",
+    "contactTitle": "Kontakt",
+    "contactEmail": "E-Mail: info@msk-scripts.de",
+    "noAdsTitle": "Nutzung der Kontaktdaten für Werbezwecke ausgeschlossen",
+    "noAdsText": "Der Verwendung meiner/unserer Daten für Marketing- und Werbezwecke gemäß § 7 Abs. 2 Nr. 2 UWG sowie einer Weitergabe an Dritte wird hiermit ausdrücklich widersprochen. Zuwiderhandlungen werden strafrechtlich verfolgt.",
+    "responsibleTitle": "Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV",
+    "disputeTitle": "Verbraucherstreitbeilegung / Universalschlichtungsstelle",
+    "disputeText": "Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.",
+    "liabilityTitle": "Haftungsausschluss",
+    "liabilityContentTitle": "Haftung für Inhalte",
+    "liabilityContentText": "Die Inhalte dieser Seite wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen.",
+    "liabilityLinksTitle": "Haftung für Links",
+    "liabilityLinksText": "Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich."
   },
   "home": {
     "title": "MSK Paste",
@@ -133,37 +152,57 @@
       "title": "2. Verantwortlicher",
       "text": "Verantwortlich im Sinne der DSGVO ist:\nMoritz Kohm\nc/o Impressumservice Dein-Impressum\nStettiner Str. 41\n35410 Hungen\nDeutschland\nE-Mail: info@msk-scripts.de"
     },
+    "dpo": {
+      "title": "3. Datenschutzbeauftragter",
+      "text": "Die Bestellung eines Datenschutzbeauftragten ist gesetzlich nicht erforderlich. Bei Anfragen zum Datenschutz wende dich bitte direkt an den Verantwortlichen unter info@msk-scripts.de."
+    },
+    "hosting": {
+      "title": "4. Hosting & Server-Log-Dateien",
+      "text": "Diese Website wird auf Servern der netcup GmbH (Daimlerstraße 25, 76185 Karlsruhe) betrieben. Mit netcup besteht ein Vertrag zur Auftragsverarbeitung gemäß Art. 28 DSGVO.\n\nBeim Aufruf der Website werden vom Hosting-Provider automatisch technische Informationen in Server-Logfiles erfasst (Browsertyp, Betriebssystem, Referrer-URL, Hostname, Uhrzeit der Anfrage, IP-Adresse). Diese Daten werden ausschließlich zu Zwecken der technischen Bereitstellung, Stabilität und Sicherheit verarbeitet und gelöscht, sobald sie zur Erreichung dieser Zwecke nicht mehr erforderlich sind.\n\nRechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einer technisch fehlerfreien Bereitstellung)."
+    },
     "data": {
-      "title": "3. Verarbeitete Daten",
+      "title": "5. Verarbeitete Daten",
       "text": "Beim Erstellen einer Paste werden folgende Daten gespeichert:\n• der von dir eingegebene Inhalt\n• optional ein Titel\n• die ausgewählte Programmiersprache\n• optional ein bcrypt-Hash deines Passworts\n• Ablaufdatum und „Burn after read“-Flag\n• ein automatisch generierter Lösch-Token\n• die Paste-Größe in Bytes\n• Erstellungszeitpunkt\n• ein HMAC-SHA-256-Hash deiner IP-Adresse für das Rate-Limit (DSGVO-konform)\n\nDie ursprüngliche IP-Adresse wird nicht gespeichert und kann aus dem Hash nicht rekonstruiert werden."
     },
+    "legalBasis": {
+      "title": "6. Rechtsgrundlagen der Verarbeitung",
+      "text": "Wir verarbeiten deine Daten auf folgenden Rechtsgrundlagen:\n• Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung) – für die Bereitstellung des Paste-Dienstes\n• Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse) – für Rate-Limiting, Missbrauchsbekämpfung und den sicheren Betrieb der Website\n• Art. 6 Abs. 1 lit. c DSGVO (rechtliche Verpflichtung) – sofern gesetzliche Aufbewahrungs- oder Auskunftspflichten bestehen"
+    },
     "cookies": {
-      "title": "4. Cookies",
-      "text": "Wir setzen ein einziges Cookie: NEXT_LOCALE speichert deine Sprachauswahl (DE/EN) für 12 Monate. Es ist technisch notwendig und nicht zur Werbung oder Analyse gedacht."
+      "title": "7. Cookies",
+      "text": "Wir setzen ein einziges Cookie: NEXT_LOCALE speichert deine Sprachauswahl (DE/EN) für 12 Monate. Es ist technisch notwendig und nicht zur Werbung oder Analyse gedacht.\n\nRechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einer komfortablen Sprachauswahl)."
     },
     "tracking": {
-      "title": "5. Kein Tracking",
+      "title": "8. Kein Tracking",
       "text": "Es werden keine Analyse-Tools (Google Analytics, Plausible, Matomo o. ä.) verwendet. Es findet keine GeoIP-Auflösung statt. Es werden keine Drittanbieter-Skripte geladen."
     },
     "retention": {
-      "title": "6. Speicherdauer",
-      "text": "Pastes werden nach Ablauf des gewählten Zeitraums automatisch und unwiderruflich gelöscht. „Burn after read“-Pastes werden direkt nach dem ersten Aufruf entfernt. Du kannst eine Paste jederzeit mit deinem Lösch-Token vorzeitig löschen.\n\nIP-Hashes für Rate-Limiting werden nur kurzzeitig im Arbeitsspeicher gehalten und automatisch nach 1 Stunde verworfen."
+      "title": "9. Speicherdauer",
+      "text": "Pastes werden nach Ablauf des gewählten Zeitraums automatisch und unwiderruflich gelöscht. „Burn after read“-Pastes werden direkt nach dem ersten Aufruf entfernt. Du kannst eine Paste jederzeit mit deinem Lösch-Token vorzeitig löschen.\n\nIP-Hashes für Rate-Limiting werden nur kurzzeitig im Arbeitsspeicher gehalten und automatisch nach 1 Stunde verworfen.\n\nServer-Logs werden gelöscht, sobald sie zur technischen Bereitstellung und Sicherheit nicht mehr erforderlich sind."
     },
     "rights": {
-      "title": "7. Deine Rechte",
-      "text": "Du hast nach DSGVO das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch. Wende dich dafür bitte per E-Mail an den Verantwortlichen.\n\nDa wir keine Konten speichern, ist eine Identifizierung außerhalb der bei der jeweiligen Paste hinterlegten Daten allerdings nicht möglich."
+      "title": "10. Deine Rechte",
+      "text": "Du hast nach DSGVO folgende Rechte:\n• Auskunft über die zu deiner Person gespeicherten Daten (Art. 15 DSGVO)\n• Berichtigung unrichtiger Daten (Art. 16 DSGVO)\n• Löschung deiner Daten (Art. 17 DSGVO)\n• Einschränkung der Verarbeitung (Art. 18 DSGVO)\n• Datenübertragbarkeit (Art. 20 DSGVO)\n• Widerspruch gegen die Verarbeitung (Art. 21 DSGVO)\n• Widerruf einer erteilten Einwilligung mit Wirkung für die Zukunft\n• Beschwerde bei einer Aufsichtsbehörde (Art. 77 DSGVO)\n\nZur Ausübung deiner Rechte wende dich per E-Mail an info@msk-scripts.de. Da wir keine Konten speichern, ist eine Identifizierung außerhalb der bei der jeweiligen Paste hinterlegten Daten allerdings nicht möglich."
+    },
+    "noAutomatedDecisions": {
+      "title": "11. Keine automatisierte Entscheidungsfindung",
+      "text": "Eine automatisierte Entscheidungsfindung einschließlich Profiling im Sinne von Art. 22 DSGVO findet auf dieser Website nicht statt."
+    },
+    "authority": {
+      "title": "12. Zuständige Aufsichtsbehörde",
+      "text": "Im Falle von Verstößen gegen die DSGVO steht dir ein Beschwerderecht bei einer Aufsichtsbehörde zu. Für den Verantwortlichen zuständig ist:\n\nDer Landesbeauftragte für den Datenschutz und die Informationsfreiheit Baden-Württemberg\nLautenschlagerstraße 20\n70173 Stuttgart\nTelefon: +49 711 615541-0\nE-Mail: poststelle@lfdi.bwl.de\nWeb: https://www.baden-wuerttemberg.datenschutz.de"
     },
     "security": {
-      "title": "8. Sicherheit",
-      "text": "Passwörter werden ausschließlich als bcrypt-Hash (Cost-Faktor 12) gespeichert. Die Verbindung erfolgt verschlüsselt via HTTPS. Der Server ist mit aktuellen Sicherheits-Updates versehen, eine Firewall ist aktiv."
+      "title": "13. Sicherheit",
+      "text": "Passwörter werden ausschließlich als bcrypt-Hash (Cost-Faktor 12) gespeichert. Die Verbindung erfolgt verschlüsselt via HTTPS (TLS). Der Server ist mit aktuellen Sicherheits-Updates versehen, eine Firewall ist aktiv."
     },
     "thirdParty": {
-      "title": "9. Drittanbieter",
-      "text": "Schriftarten (Syne, DM Sans, JetBrains Mono) werden von Google Fonts geladen. Dabei wird deine IP-Adresse an Google übermittelt. Es werden keine Cookies gesetzt."
+      "title": "14. Schriftarten & Drittanbieter",
+      "text": "Schriftarten (Inter, JetBrains Mono) werden über das in Next.js integrierte Font-System (next/font) bereits zur Build-Zeit lokal in den Build der Anwendung aufgenommen und anschließend ausschließlich vom eigenen Server ausgeliefert. Zur Laufzeit findet keine Verbindung zu Servern Dritter (insbesondere Google Fonts) statt.\n\nEs werden keine weiteren externen Skripte, Schriften oder Tracking-Dienste geladen."
     },
     "contact": {
-      "title": "10. Kontakt",
-      "text": "Fragen zum Datenschutz beantworten wir gerne per E-Mail: moritz.kohm@gmail.com"
+      "title": "15. Kontakt",
+      "text": "Fragen zum Datenschutz beantworten wir gerne per E-Mail: info@msk-scripts.de"
     }
   },
   "languages": {

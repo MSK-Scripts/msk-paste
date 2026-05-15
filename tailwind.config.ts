@@ -22,9 +22,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans:    ['var(--font-dm-sans)',     'system-ui', 'sans-serif'],
-        heading: ['var(--font-syne)',        'system-ui', 'sans-serif'],
-        mono:    ['var(--font-jetbrains)',   'ui-monospace', 'monospace'],
+        sans:    ['var(--font-sans)', 'system-ui', 'sans-serif'],
+        heading: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+        mono:    ['var(--font-mono)', 'ui-monospace', 'monospace'],
       },
       animation: {
         'fade-in':   'fadeIn 0.3s ease-in-out',

@@ -11,6 +11,9 @@ export async function Footer() {
           <span className="text-msk-accent">MSK Paste</span> · {t('openSource')} · {t('byBrand')}
         </p>
         <nav className="flex items-center gap-4">
+          <Link href="/imprint" className="hover:text-msk-text transition-colors">
+            {t('imprint')}
+          </Link>
           <Link href="/privacy" className="hover:text-msk-text transition-colors">
             {t('privacy')}
           </Link>

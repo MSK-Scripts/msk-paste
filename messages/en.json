@@ -22,7 +22,26 @@
   "footer": {
     "openSource": "Open source under AGPL-3.0",
     "privacy": "Privacy",
+    "imprint": "Imprint",
     "byBrand": "by MSK Scripts"
+  },
+  "imprintPage": {
+    "title": "Legal Notice",
+    "section1Title": "Information according to § 5 DDG",
+    "addressName": "Moritz Kohm",
+    "addressLines": "c/o Impressumservice Dein-Impressum\nStettiner Str. 41\n35410 Hungen\nGermany",
+    "contactTitle": "Contact",
+    "contactEmail": "Email: info@msk-scripts.de",
+    "noAdsTitle": "Use of contact data for advertising purposes excluded",
+    "noAdsText": "The use of our contact data published within the scope of the imprint obligation for sending unsolicited advertising and informational materials is hereby expressly prohibited. Violations will be prosecuted under criminal law.",
+    "responsibleTitle": "Responsible for content according to § 18 Para. 2 MStV",
+    "disputeTitle": "Consumer dispute resolution",
+    "disputeText": "We are not willing or obliged to participate in dispute resolution proceedings before a consumer arbitration board.",
+    "liabilityTitle": "Disclaimer",
+    "liabilityContentTitle": "Liability for content",
+    "liabilityContentText": "The contents of this page were created with the greatest care. However, we cannot guarantee the accuracy, completeness or timeliness of the content.",
+    "liabilityLinksTitle": "Liability for links",
+    "liabilityLinksText": "Our offer contains links to external websites of third parties, on whose contents we have no influence. Therefore, we cannot assume any liability for these external contents. The respective provider or operator of the linked pages is always responsible for the content of the linked pages."
   },
   "home": {
     "title": "MSK Paste",
@@ -131,39 +150,59 @@
     },
     "controller": {
       "title": "2. Data controller",
-      "text": "Controller in the sense of the GDPR:\nMoritz Kohm\nc/o Impressumservice Dein-Impressum\nStettiner Str. 41\n35410 Hungen\nGermany\nE-Mail: info@msk-scripts.de"
+      "text": "Controller in the sense of the GDPR:\nMoritz Kohm\nc/o Impressumservice Dein-Impressum\nStettiner Str. 41\n35410 Hungen\nGermany\nEmail: info@msk-scripts.de"
+    },
+    "dpo": {
+      "title": "3. Data protection officer",
+      "text": "The appointment of a data protection officer is not required by law in this case. For privacy-related inquiries, please contact the controller directly at info@msk-scripts.de."
+    },
+    "hosting": {
+      "title": "4. Hosting & server log files",
+      "text": "This website is operated on servers of netcup GmbH (Daimlerstraße 25, 76185 Karlsruhe, Germany). A data processing agreement pursuant to Art. 28 GDPR has been concluded with netcup.\n\nWhen the website is accessed, the hosting provider automatically collects technical information in server log files (browser type, operating system, referrer URL, hostname, time of request, IP address). This data is processed exclusively for the purposes of technical operation, stability and security and is deleted as soon as it is no longer required to achieve these purposes.\n\nLegal basis: Art. 6 (1) (f) GDPR (legitimate interest in error-free technical provision)."
     },
     "data": {
-      "title": "3. Data we process",
+      "title": "5. Data we process",
       "text": "When you create a paste, the following data is stored:\n• the content you entered\n• an optional title\n• the selected programming language\n• an optional bcrypt hash of your password\n• expiration date and the \"burn after read\" flag\n• an automatically generated delete token\n• the paste size in bytes\n• the creation timestamp\n• an HMAC-SHA-256 hash of your IP address for rate limiting (GDPR compliant)\n\nThe original IP address is never stored and cannot be reconstructed from the hash."
     },
+    "legalBasis": {
+      "title": "6. Legal bases for processing",
+      "text": "We process your data on the following legal bases:\n• Art. 6 (1) (b) GDPR (contract performance) – for providing the paste service\n• Art. 6 (1) (f) GDPR (legitimate interest) – for rate limiting, abuse prevention and the secure operation of the website\n• Art. 6 (1) (c) GDPR (legal obligation) – where statutory retention or disclosure obligations apply"
+    },
     "cookies": {
-      "title": "4. Cookies",
-      "text": "We set exactly one cookie: NEXT_LOCALE stores your language preference (DE/EN) for 12 months. It is technically necessary and not used for advertising or analytics."
+      "title": "7. Cookies",
+      "text": "We set exactly one cookie: NEXT_LOCALE stores your language preference (DE/EN) for 12 months. It is technically necessary and not used for advertising or analytics.\n\nLegal basis: Art. 6 (1) (f) GDPR (legitimate interest in a convenient language selection)."
     },
     "tracking": {
-      "title": "5. No tracking",
+      "title": "8. No tracking",
       "text": "No analytics tools (Google Analytics, Plausible, Matomo, …) are used. No GeoIP resolution happens. No third-party scripts are loaded."
     },
     "retention": {
-      "title": "6. Retention",
-      "text": "Pastes are automatically and permanently deleted after their chosen expiration window. \"Burn after read\" pastes are wiped immediately after the first successful view. You can delete a paste at any time using its delete token.\n\nIP hashes used for rate limiting are kept only briefly in memory and are automatically discarded after one hour."
+      "title": "9. Retention",
+      "text": "Pastes are automatically and permanently deleted after their chosen expiration window. \"Burn after read\" pastes are wiped immediately after the first successful view. You can delete a paste at any time using its delete token.\n\nIP hashes used for rate limiting are kept only briefly in memory and are automatically discarded after one hour.\n\nServer logs are deleted as soon as they are no longer required for the technical operation and security of the service."
     },
     "rights": {
-      "title": "7. Your rights",
-      "text": "Under the GDPR you have the right to information, rectification, deletion, restriction of processing, data portability, and objection. To exercise these rights, please contact the controller by email.\n\nBecause we store no accounts, identification beyond the data stored with the specific paste is not possible."
+      "title": "10. Your rights",
+      "text": "Under the GDPR you have the following rights:\n• Access to the data stored about you (Art. 15 GDPR)\n• Rectification of incorrect data (Art. 16 GDPR)\n• Erasure of your data (Art. 17 GDPR)\n• Restriction of processing (Art. 18 GDPR)\n• Data portability (Art. 20 GDPR)\n• Objection to processing (Art. 21 GDPR)\n• Withdrawal of consent given, with effect for the future\n• Complaint to a supervisory authority (Art. 77 GDPR)\n\nTo exercise these rights, please email info@msk-scripts.de. Because we store no accounts, identification beyond the data stored with the specific paste is not possible."
+    },
+    "noAutomatedDecisions": {
+      "title": "11. No automated decision-making",
+      "text": "Automated decision-making, including profiling within the meaning of Art. 22 GDPR, does not take place on this website."
+    },
+    "authority": {
+      "title": "12. Competent supervisory authority",
+      "text": "In the event of violations of the GDPR, you have the right to lodge a complaint with a supervisory authority. The competent supervisory authority for the controller is:\n\nThe State Commissioner for Data Protection and Freedom of Information Baden-Württemberg\nLautenschlagerstraße 20\n70173 Stuttgart, Germany\nPhone: +49 711 615541-0\nEmail: poststelle@lfdi.bwl.de\nWeb: https://www.baden-wuerttemberg.datenschutz.de"
     },
     "security": {
-      "title": "8. Security",
-      "text": "Passwords are stored as bcrypt hashes (cost factor 12) only. All connections are encrypted via HTTPS. The server runs with current security updates and a firewall in place."
+      "title": "13. Security",
+      "text": "Passwords are stored as bcrypt hashes (cost factor 12) only. All connections are encrypted via HTTPS (TLS). The server runs with current security updates and a firewall in place."
     },
     "thirdParty": {
-      "title": "9. Third parties",
-      "text": "Web fonts (Syne, DM Sans, JetBrains Mono) are loaded from Google Fonts. Your IP address is transmitted to Google for this purpose. No cookies are set."
+      "title": "14. Webfonts & third parties",
+      "text": "Web fonts (Inter, JetBrains Mono) are bundled into the application at build time via Next.js's built-in font system (next/font) and served exclusively from this application's own origin. No connection to third-party servers (in particular Google Fonts) takes place at runtime.\n\nNo other external scripts, fonts or tracking services are loaded."
     },
     "contact": {
-      "title": "10. Contact",
-      "text": "For privacy-related questions please email: moritz.kohm@gmail.com"
+      "title": "15. Contact",
+      "text": "For privacy-related questions please email: info@msk-scripts.de"
     }
   },
   "languages": {

@@ -2,13 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800;900&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap');
-
-:root {
-  --font-dm-sans:   'DM Sans', sans-serif;
-  --font-syne:      'Syne', sans-serif;
-  --font-jetbrains: 'JetBrains Mono', ui-monospace, monospace;
-}
+/*
+ * Font CSS variables (--font-sans, --font-mono) are defined at the
+ * <html> element by `next/font/google` in `app/layout.tsx`.
+ * The fonts are bundled into the build at compile time and served from
+ * this app's own origin — no runtime connection to Google.
+ */
 
 * {
   box-sizing: border-box;
@@ -21,7 +20,7 @@ html, body {
 }
 
 body {
-  font-family: var(--font-dm-sans);
+  font-family: var(--font-sans), system-ui, sans-serif;
   background:  #1b1b1d;
   color:       #e3e3e3;
   -webkit-font-smoothing: antialiased;
@@ -58,7 +57,7 @@ body {
 
 /* Heading utility */
 .font-heading {
-  font-family: var(--font-syne);
+  font-family: var(--font-sans), system-ui, sans-serif;
   font-weight: 800;
   letter-spacing: -0.02em;
 }
@@ -68,7 +67,7 @@ body {
   margin: 0;
   padding: 1rem 1.25rem;
   background: transparent !important;
-  font-family: var(--font-jetbrains);
+  font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.875rem;
   line-height: 1.6;
   overflow: auto;
