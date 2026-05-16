@@ -17,7 +17,8 @@
     "createNew": "New paste",
     "stats": "Stats",
     "docs": "Docs",
-    "github": "GitHub"
+    "github": "GitHub",
+    "menu": "Menu"
   },
   "footer": {
     "openSource": "Open source under AGPL-3.0",
