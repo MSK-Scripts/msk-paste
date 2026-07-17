@@ -17,6 +17,9 @@
 /.next/
 /out/
 
+# Graphify
+graphify-out/
+
 # production
 /build
 
