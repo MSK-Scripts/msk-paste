@@ -54,7 +54,12 @@ jobs:
     runs-on: ubuntu-latest
     # In Forks nicht spiegeln. Ob die Secrets gesetzt sind, prüft der Step unten,
     # der secrets-Kontext ist auf dieser Ebene nicht lesbar.
-    if: github.repository_owner == 'MSK-Scripts'
+    #
+    # Dependabot-Pushes werden übersprungen: solche Läufe bekommen den
+    # Dependabot-Secret-Store und sehen die Actions-Secrets nicht, der Job würde
+    # also zwangsläufig rot. Die Branches landen ohnehin beim nächsten
+    # main-Push auf Codeberg, weil die Refspec alle origin-Refs mitnimmt.
+    if: github.repository_owner == 'MSK-Scripts' && github.actor != 'dependabot[bot]'
 
     steps:
       - name: Checkout (vollständige History, alle Refs)
