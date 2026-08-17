@@ -1,13 +1,19 @@
 # =============================================================================
 # Mirror to Codeberg
 # -----------------------------------------------------------------------------
-# GitHub bleibt die Quelle der Wahrheit. Bei jedem Push und bei jedem gelöschten
-# Branch oder Tag wird der komplette Ref-Stand nach Codeberg gespiegelt.
+# GitHub bleibt die Quelle der Wahrheit. Der Workflow läuft nur bei einem Push
+# auf main, spiegelt dann aber den kompletten Ref-Stand, also alle Branches und
+# alle Tags.
 #
 # Der Spiegel ist exakt: mit --prune verschwinden auf Codeberg auch die Branches
 # und Tags, die es auf GitHub nicht mehr gibt. Direkt auf Codeberg gepushte
 # Commits werden dabei überschrieben. Wer dort etwas beitragen will, macht das
 # über GitHub.
+#
+# Folge des main-Triggers: Änderungen an anderen Branches, neue Tags und
+# Löschungen erreichen Codeberg nicht sofort, sondern erst beim nächsten
+# main-Push. Wer den Spiegel vorher aktuell braucht, startet den Workflow von
+# Hand über "Run workflow".
 #
 # EINMALIGE EINRICHTUNG
 #   1. Auf Codeberg ein leeres Repository anlegen (ohne README, ohne Lizenz).
@@ -19,7 +25,7 @@
 #        CODEBERG_REPO   → z. B. msk-scripts/msk-shop
 #        CODEBERG_USER   → der Codeberg-Benutzername
 #   4. Workflow einmal manuell über "Run workflow" starten, danach läuft er
-#      bei jedem Push von allein.
+#      bei jedem Push auf main von allein.
 #
 # Repo-Name und Benutzername sind eigentlich keine Geheimnisse und wären als
 # Variables besser aufgehoben. Sie liegen hier trotzdem als Secrets, weil der
@@ -32,9 +38,7 @@ name: Mirror to Codeberg
 
 on:
   push:
-    branches: ["**"]
-    tags: ["**"]
-  delete:
+    branches: [main]
   workflow_dispatch:
 
 # Nur lesen. Der Workflow schreibt ausschließlich auf das fremde Remote.
@@ -55,10 +59,11 @@ jobs:
     # In Forks nicht spiegeln. Ob die Secrets gesetzt sind, prüft der Step unten,
     # der secrets-Kontext ist auf dieser Ebene nicht lesbar.
     #
-    # Dependabot-Pushes werden übersprungen: solche Läufe bekommen den
+    # Dependabot bleibt ausgeschlossen: solche Läufe bekommen den
     # Dependabot-Secret-Store und sehen die Actions-Secrets nicht, der Job würde
-    # also zwangsläufig rot. Die Branches landen ohnehin beim nächsten
-    # main-Push auf Codeberg, weil die Refspec alle origin-Refs mitnimmt.
+    # also zwangsläufig rot. Seit der Trigger auf main beschränkt ist, greift das
+    # praktisch nur noch bei Auto-Merge, wo der Push auf main von Dependabot
+    # ausgehen kann. Die Refspec nimmt ohnehin alle origin-Refs mit.
     if: github.repository_owner == 'MSK-Scripts' && github.actor != 'dependabot[bot]'
 
     steps:
