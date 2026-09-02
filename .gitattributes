@@ -1,0 +1,4 @@
+# Shell-Skripte laufen auf dem Server. Ohne diese Zeile checkt Git sie unter
+# Windows mit CRLF aus, und der Server antwortet mit
+# "bad interpreter: /bin/bash^M".
+*.sh text eol=lf

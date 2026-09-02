@@ -80,6 +80,13 @@ jobs:
 
             # Fix permissions
             chown -R musiker15:musiker15 /opt/msk-paste/
+
+            # scripts/ gehoert root und bleibt fuer den Dienstnutzer
+            # unbeschreibbar: msk-cron.sh wird aus der root-Crontab
+            # ausgefuehrt. Waere die Datei fuer musiker15 schreibbar, waere
+            # jeder Weg in den Anwendungsnutzer auch ein Weg nach root.
+            chown -R root:root /opt/msk-paste/scripts/
+            chmod 755 /opt/msk-paste/scripts/msk-cron.sh
             chmod -R u+w /opt/msk-paste/.next/
             chmod 600 /opt/msk-paste/.env
 
