@@ -63,10 +63,10 @@ systemctl status msk-paste
 journalctl -u msk-paste -f
 
 # Database backup (kept for 14 days)
-sudo bash /opt/msk-paste/deployment/scripts/backup.sh
+sudo bash /opt/msk-paste/scripts/backup.sh
 
 # Cron: backup + cleanup
-0 3 * * * /opt/msk-paste/deployment/scripts/backup.sh
+0 3 * * * /opt/msk-paste/scripts/backup.sh
 30 3 * * * cd /opt/msk-paste && /usr/bin/npx tsx scripts/cleanup.ts >> /var/log/msk-paste-cleanup.log 2>&1
 ```
 

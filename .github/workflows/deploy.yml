@@ -86,7 +86,7 @@ jobs:
             # ausgefuehrt. Waere die Datei fuer musiker15 schreibbar, waere
             # jeder Weg in den Anwendungsnutzer auch ein Weg nach root.
             chown -R root:root /opt/msk-paste/scripts/
-            chmod 755 /opt/msk-paste/scripts/msk-cron.sh
+            chmod 755 /opt/msk-paste/scripts/*.sh
             chmod -R u+w /opt/msk-paste/.next/
             chmod 600 /opt/msk-paste/.env
 

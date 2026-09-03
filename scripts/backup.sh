@@ -5,8 +5,8 @@
 # Creates a gzip-compressed dump of the MariaDB database.
 # Keeps the latest 14 backups, older ones are deleted automatically.
 #
-# Usage: sudo bash /opt/msk-paste/deployment/scripts/backup.sh
-# Cron:  0 3 * * * /opt/msk-paste/deployment/scripts/backup.sh
+# Usage: sudo bash /opt/msk-paste/scripts/backup.sh
+# Cron:  0 3 * * * /opt/msk-paste/scripts/backup.sh
 # ============================================================================
 
 set -euo pipefail
