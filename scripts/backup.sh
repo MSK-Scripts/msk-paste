@@ -74,6 +74,13 @@ on_exit() {
         echo "=== $(date -Is)  end backup rc=0"
     fi
 }
+# A run ended by a signal (reboot, OOM, systemd stop, kill) leaves $? in the
+# EXIT trap at the status of the last COMPLETED command, so usually 0. The trap
+# would then report success for an aborted run and no mail would go out.
+# Observed exactly like that on 2026-09-03 and measured afterwards. These two
+# lines force a code the EXIT trap sees as a failure.
+trap 'exit 143' TERM
+trap 'exit 130' INT
 trap on_exit EXIT
 
 # Root check
