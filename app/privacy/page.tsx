@@ -33,7 +33,7 @@ export default async function PrivacyPage() {
           <header>
             <h1 className="font-heading text-3xl text-msk-text">{t('title')}</h1>
             <p className="text-xs text-msk-muted mt-2 font-mono">
-              {t('lastUpdated', { date: '2026-05-13' })}
+              {t('lastUpdated', { date: '2026-10-30' })}
             </p>
           </header>
 
