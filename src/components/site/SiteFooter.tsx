@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { getLocale, getTranslations } from 'next-intl/server'
 
@@ -64,7 +65,7 @@ export async function SiteFooter() {
           <div className="grid gap-x-10 gap-y-10 @lg:grid-cols-2 @4xl:grid-cols-[minmax(0,1.4fr)_repeat(3,minmax(0,1fr))]">
             <div className="grid content-start gap-4 @lg:col-span-2 @4xl:col-span-1">
               <Link href="/" className="inline-flex min-h-11 items-center gap-2.5 self-start text-band-foreground">
-                <img src="/logo.png" alt="" width={32} height={32} className="h-8 w-8 rounded-lg object-contain" />
+                <Image src="/logo.png" alt="" width={32} height={32} className="h-8 w-8 rounded-lg object-contain" />
                 <span className="font-display text-lead font-bold [font-stretch:108%]">{TOOL.name}</span>
               </Link>
               <p className="max-w-[40ch] text-small text-band-muted">{t('footerTagline')}</p>

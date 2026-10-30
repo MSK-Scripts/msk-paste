@@ -14,11 +14,13 @@
 
 name: Mirror to Codeberg
 
+# Only main and tags start a run. No delete trigger: every merged pull request
+# deletes its branch and would start a run of its own; the next push to main
+# prunes the branch on Codeberg anyway.
 on:
   push:
     branches: ["main"]
     tags: ["**"]
-  delete:
   workflow_dispatch:
 
 permissions:
