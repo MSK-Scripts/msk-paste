@@ -36,7 +36,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 const isDev = process.env.NODE_ENV === 'development'
 const TURNSTILE = 'https://challenges.cloudflare.com'
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   // In der Entwicklung kein Nonce: Nexts React Refresh lädt seinen
   // HMR-Runtime über `eval`, und eine strikte Policy lässt die Seite gar
   // nicht erst hydratisieren. Der Dev-Server ist nicht exponiert, deshalb
