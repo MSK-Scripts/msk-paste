@@ -59,7 +59,7 @@ async function findKeys(ref: string): Promise<ApiKeyRow[]> {
   }
   if (ref.startsWith(API_KEY_PREFIX) && ref.length > 20) {
     return queryMany<ApiKeyRow>(`SELECT ${COLUMNS} FROM api_keys WHERE key_hash = ?`, [
-      hashApiKey(ref),
+      await hashApiKey(ref),
     ])
   }
   // The listing shows the prefix followed by an ellipsis; accept it copied.
@@ -80,7 +80,7 @@ async function create(label: string | undefined) {
   const name = label?.trim() || `key ${new Date().toISOString().slice(0, 10)}`
   if (name.length > 100) fail('The label may have at most 100 characters.')
 
-  const { key, prefix, hash } = generateApiKey()
+  const { key, prefix, hash } = await generateApiKey()
   await execute('INSERT INTO api_keys (key_hash, key_prefix, label) VALUES (?, ?, ?)', [
     hash,
     prefix,

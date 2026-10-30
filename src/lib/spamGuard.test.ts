@@ -148,6 +148,22 @@ describe('an API key', () => {
     expect(await keyRequest('Basic abc')).toMatchObject({ ok: false, code: 'api-key-invalid' })
   })
 
+  it('stops an address after ten wrong keys, before hashing again', async () => {
+    const other = Buffer.alloc(32, 7)
+    const attempt = () =>
+      guardCreate({
+        headers: headers({ authorization: 'Bearer mskp_wrong' }),
+        content: text(),
+        proof:   {},
+        ip:      '198.51.100.9',
+        ipHash:  other,
+      })
+    for (let i = 0; i < 10; i++) expect(await attempt()).toMatchObject({ status: 401 })
+    vi.mocked(findActiveApiKey).mockClear()
+    expect(await attempt()).toMatchObject({ ok: false, status: 429, code: 'key-attempts' })
+    expect(findActiveApiKey).not.toHaveBeenCalled()
+  })
+
   it('still runs the content checks', async () => {
     vi.mocked(findActiveApiKey).mockResolvedValue({
       id: 2, key_prefix: 'mskp_abcdefgh', label: 'test',

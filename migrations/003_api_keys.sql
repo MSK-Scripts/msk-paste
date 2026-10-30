@@ -1,7 +1,7 @@
 -- ============================================================================
 -- MSK Paste — 003_api_keys
 -- Keys for creating pastes through the API. Issued with scripts/api-key.sh on
--- the server; only the SHA-256 of a key is stored.
+-- the server; only a scrypt hash of a key is stored.
 -- ============================================================================
 
 CREATE TABLE api_keys (
