@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server'
-import { Header } from '@/components/Header'
-import { Footer } from '@/components/Footer'
+import { PageHead } from '@/components/site/PageHead'
+import { SiteFrame } from '@/components/site/SiteFrame'
 import { StatsCharts } from '@/components/StatsCharts'
 import { getGlobalStats } from '@/lib/stats'
 
@@ -13,16 +13,10 @@ export default async function StatsPage() {
   const stats = await getGlobalStats()
 
   return (
-    <main className="min-h-screen flex flex-col">
-      <Header />
-
-      <div className="flex-1 px-6 py-10">
-        <div className="max-w-4xl mx-auto space-y-8">
-
-          <div>
-            <h1 className="font-heading text-3xl text-msk-text">{t('title')}</h1>
-            <p className="text-sm text-msk-muted mt-1">{t('subtitle')}</p>
-          </div>
+    <SiteFrame>
+      <PageHead title={t('title')} lead={t('subtitle')} />
+      <div className="container-page py-[var(--space-section)]">
+        <div className="grid gap-8">
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <Card label={t('totalPastes')}    value={stats.totalPastes} />
@@ -34,16 +28,15 @@ export default async function StatsPage() {
         </div>
       </div>
 
-      <Footer />
-    </main>
+    </SiteFrame>
   )
 }
 
 function Card({ label, value }: { label: string; value: number }) {
   return (
-    <div className="px-5 py-6 bg-msk-surface border border-msk-border rounded-lg">
-      <div className="text-xs uppercase tracking-wider text-msk-muted">{label}</div>
-      <div className="font-heading text-3xl text-msk-text mt-2">
+    <div className="rounded-lg border border-border bg-card p-5 shadow-[var(--shadow-card)]">
+      <div className="text-label font-semibold uppercase tracking-[0.08em] text-muted-foreground">{label}</div>
+      <div className="mt-2 font-display text-h3 font-[650] tabular-nums text-foreground">
         {value.toLocaleString('de-DE')}
       </div>
     </div>

@@ -1,58 +1,46 @@
-'use client'
+import { getLocale, getTranslations } from 'next-intl/server'
 
-import { useTranslations } from 'next-intl'
-import {
-  Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis,
-} from 'recharts'
 import type { GlobalStats } from '@/types'
 
-interface StatsChartsProps {
-  stats: GlobalStats
-}
-
-export function StatsCharts({ stats }: StatsChartsProps) {
-  const t  = useTranslations('stats')
-  const tl = useTranslations('languages')
-
-  const data = stats.topLanguages.map((l) => ({
-    name:  tl(l.language as never) || l.language,
-    count: l.count,
-  }))
-
-  if (data.length === 0) {
-    return (
-      <div className="px-4 py-12 text-center text-sm text-msk-muted bg-msk-surface border border-msk-border rounded-lg">
-        {t('noData')}
-      </div>
-    )
-  }
+/**
+ * The most used languages as horizontal bars, rendered on the server: no
+ * chart library, no client script. Every bar carries its count and share as
+ * text, so no value is told by length alone.
+ */
+export async function StatsCharts({ stats }: { stats: GlobalStats }) {
+  const [t, tl, locale] = await Promise.all([getTranslations('stats'), getTranslations('languages'), getLocale()])
+  const total = stats.topLanguages.reduce((sum, l) => sum + l.count, 0)
+  const number = new Intl.NumberFormat(locale === 'de' ? 'de-DE' : 'en-GB')
+  const percent = new Intl.NumberFormat(locale === 'de' ? 'de-DE' : 'en-GB', { style: 'percent', maximumFractionDigits: 1 })
 
   return (
-    <div className="px-4 py-6 bg-msk-surface border border-msk-border rounded-lg">
-      <h2 className="text-sm font-medium text-msk-muted uppercase tracking-wider mb-4">
+    <section aria-labelledby="top-languages" className="rounded-lg border border-border bg-card p-5 shadow-[var(--shadow-card)]">
+      <h2 id="top-languages" className="mb-4 font-display text-lead font-[650]">
         {t('topLanguages')}
       </h2>
-      <div style={{ width: '100%', height: 280 }}>
-        <ResponsiveContainer>
-          <BarChart data={data} margin={{ top: 10, right: 10, bottom: 10, left: -10 }}>
-            <CartesianGrid stroke="#3d3d3f" strokeDasharray="3 3" />
-            <XAxis dataKey="name" stroke="#8d9096" fontSize={12} />
-            <YAxis stroke="#8d9096" fontSize={12} allowDecimals={false} />
-            <Tooltip
-              cursor={{ fill: 'rgba(94,177,49,0.08)' }}
-              contentStyle={{
-                background:   '#1b1b1d',
-                border:       '1px solid #3d3d3f',
-                borderRadius: 8,
-                fontSize:     12,
-              }}
-              labelStyle={{ color: '#e3e3e3' }}
-              itemStyle={{ color: '#5eb131' }}
-            />
-            <Bar dataKey="count" fill="#5eb131" radius={[4, 4, 0, 0]} />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-    </div>
+      {stats.topLanguages.length === 0 ? (
+        <p className="py-6 text-center text-small text-muted-foreground">{t('noData')}</p>
+      ) : (
+        <ul className="grid gap-3">
+          {stats.topLanguages.map((l) => {
+            const share = total > 0 ? l.count / total : 0
+            const name = tl.has(l.language) ? tl(l.language) : l.language
+            return (
+              <li key={l.language} className="grid gap-1">
+                <div className="flex items-center justify-between gap-3 text-small">
+                  <span className="truncate">{name}</span>
+                  <span className="shrink-0 text-muted-foreground tabular-nums">
+                    {number.format(l.count)} ({percent.format(share)})
+                  </span>
+                </div>
+                <div className="h-1.5 overflow-hidden rounded-full bg-muted">
+                  <div className="h-full rounded-full bg-chart-1" style={{ width: `${share * 100}%` }} />
+                </div>
+              </li>
+            )
+          })}
+        </ul>
+      )}
+    </section>
   )
 }

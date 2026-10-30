@@ -13,19 +13,6 @@
     "submit": "Submit",
     "optional": "optional"
   },
-  "header": {
-    "createNew": "New paste",
-    "stats": "Stats",
-    "docs": "Docs",
-    "github": "GitHub",
-    "menu": "Menu"
-  },
-  "footer": {
-    "openSource": "Open source under AGPL-3.0",
-    "privacy": "Privacy",
-    "imprint": "Imprint",
-    "byBrand": "by MSK Scripts"
-  },
   "imprintPage": {
     "title": "Legal Notice",
     "section1Title": "Information according to § 5 DDG",
@@ -46,7 +33,29 @@
   },
   "home": {
     "title": "MSK Paste",
-    "subtitle": "Self-hosted pastebin with syntax highlighting"
+    "subtitle": "Self-hosted pastebin with syntax highlighting",
+    "kicker": "A web tool by MSK Scripts",
+    "formTitle": "Create a paste",
+    "statsLink": "Statistics",
+    "factsTitle": "What MSK Paste does",
+    "facts": {
+      "highlight": {
+        "title": "Syntax highlighting",
+        "text": "Lua, JavaScript, SQL and many more languages, coloured on the server, without a script in the browser."
+      },
+      "expiry": {
+        "title": "Expiry of your choice",
+        "text": "From 10 minutes to a year. After that the paste is deleted for good."
+      },
+      "protect": {
+        "title": "Password or read once",
+        "text": "Protect a paste with a password or let it vanish after the first view."
+      },
+      "raw": {
+        "title": "Raw, download, delete",
+        "text": "Every paste comes as raw text and as a download, and the delete token lets you remove it yourself."
+      }
+    }
   },
   "createForm": {
     "contentLabel": "Content",
@@ -211,7 +220,7 @@
     },
     "thirdParty": {
       "title": "14. Web fonts, spam check & third parties",
-      "text": "Web fonts (Syne, DM Sans, JetBrains Mono) are bundled into the application at build time via Next.js's built-in font system (next/font) and served exclusively from this application's own origin. No connection to font providers takes place at runtime.\n\nSpam check: the page for creating a paste uses Cloudflare Turnstile, a service of Cloudflare, Inc. (101 Townsend St, San Francisco, CA 94107, USA), to tell people from automated requests. When that page is opened, your browser loads a script from challenges.cloudflare.com, and Turnstile evaluates technical data such as your IP address and properties of your browser. We only receive the result of the check. Turnstile is not loaded on pages that display a paste. Legal basis: Art. 6 (1) (f) GDPR, our legitimate interest in protecting the service against spam and abuse. Cloudflare is certified under the EU-US Data Privacy Framework; in addition, Standard Contractual Clauses apply. Cloudflare's privacy policy: https://www.cloudflare.com/privacypolicy/\n\nNo other external scripts, fonts or tracking services are loaded."
+      "text": "The fonts (Archivo and Source Sans 3) are part of the application and are served exclusively from this server. No connection to font providers such as Google Fonts takes place.\n\nSpam check: the page for creating a paste uses Cloudflare Turnstile, a service of Cloudflare, Inc. (101 Townsend St, San Francisco, CA 94107, USA), to tell people from automated requests. When that page is opened, your browser loads a script from challenges.cloudflare.com, and Turnstile evaluates technical data such as your IP address and properties of your browser. We only receive the result of the check. Turnstile is not loaded on pages that display a paste. Legal basis: Art. 6 (1) (f) GDPR, our legitimate interest in protecting the service against spam and abuse. Cloudflare is certified under the EU-US Data Privacy Framework; in addition, Standard Contractual Clauses apply. Cloudflare's privacy policy: https://www.cloudflare.com/privacypolicy/\n\nNo other external scripts, fonts or tracking services are loaded."
     },
     "contact": {
       "title": "15. Contact",
@@ -263,5 +272,50 @@
     "reservedId": "This paste ID is reserved.",
     "idConflict": "This paste ID is already in use.",
     "invalidPassword": "Wrong password."
+  },
+  "site": {
+    "mainNav": "Main navigation",
+    "submenu": "More in {name}",
+    "newTab": "(opens in a new tab)",
+    "fivem": "FiveM scripts",
+    "fivemPaid": "Paid scripts",
+    "fivemPaidDesc": "Every script as Encrypted or Source",
+    "fivemFree": "Free scripts",
+    "fivemFreeDesc": "Open source on GitHub, msk_core included",
+    "fivemAllAccess": "All-access subscription",
+    "fivemAllAccessDesc": "Access to every resource, cancel monthly",
+    "fivemStats": "Server statistics",
+    "fivemStatsDesc": "Live server counts per script",
+    "discord": "Discord bots",
+    "ticketDesc": "Tickets with hosted transcripts and a dashboard",
+    "giveawayDesc": "Giveaways with public result pages",
+    "tools": "Web tools",
+    "images": "Image gallery",
+    "imagesDesc": "Transparent images of vehicles, weapons and items",
+    "formsDesc": "Forms and applications with Discord integration",
+    "pasteDesc": "Share code snippets with your team",
+    "shortenerDesc": "Short links without cookies or trackers",
+    "about": "About",
+    "builtBy": "Built by",
+    "menu": "Menu",
+    "language": "Language",
+    "stats": "Statistics",
+    "footerTagline": "Share code snippets without an account or trackers, by MSK Scripts.",
+    "license": "Open source under AGPL-3.0",
+    "footerProduct": "Product",
+    "footerEcosystem": "Ecosystem",
+    "footerLegal": "Legal",
+    "documentation": "Documentation",
+    "github": "GitHub",
+    "imprint": "Imprint",
+    "privacy": "Privacy Policy",
+    "rights": "All rights reserved.",
+    "skipToContent": "Skip to content",
+    "theme": {
+      "group": "Appearance",
+      "system": "System",
+      "light": "Light",
+      "dark": "Dark"
+    }
   }
 }

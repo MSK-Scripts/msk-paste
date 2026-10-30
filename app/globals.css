@@ -1,125 +1,470 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-/*
- * Font CSS variables (--font-sans, --font-mono) are defined at the
- * <html> element by `next/font/google` in `app/layout.tsx`.
- * The fonts are bundled into the build at compile time and served from
- * this app's own origin — no runtime connection to Google.
- */
+/* Dark mode as a class variant, set by the ThemeProvider (next-themes). */
+@custom-variant dark (&:where(.dark, .dark *));
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* ============================================================================
+   MSK Paste design tokens: the msk-scripts.de system (DESIGN.md)
+   ============================================================================
+   Two layers, as in the shop and MSK Forms.
+
+   1. Source tokens, further down in `@layer base`: shadcn-style names holding
+      bare HSL channels (`--primary: 125.3 50.3% 30.8%`), light in :root,
+      dark in .dark.
+   2. Utilities, right here in `@theme inline`: `--color-primary` and friends
+      wrap the channels. Code names the utility (`bg-primary`,
+      `text-muted-foreground`) or, in CSS, `hsl(var(--primary))`; never the
+      `--color-*` variable.
+
+   The values are the shop's. src/test/contrast.test.ts reads them from this
+   file and recomputes every rendered pair in both themes.
+   ============================================================================ */
+@theme inline {
+  /* Ground, tile and card. */
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  /* Lines and controls. */
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  /* MSK green. Hover fill and soft surface are derived from `--primary`. */
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-primary-hover: color-mix(in oklab, hsl(var(--primary)) 85%, var(--primary-hover-toward));
+  --color-accent-soft: color-mix(in oklab, hsl(var(--primary)) var(--accent-soft-amount), hsl(var(--background)));
+
+  /* Status colours: text, sign and border, never a fill under text. */
+  --color-success: hsl(var(--success));
+  --color-warning: hsl(var(--warning));
+  --color-info: hsl(var(--info));
+  --color-danger: hsl(var(--danger));
+  --color-danger-foreground: hsl(var(--danger-foreground));
+
+  /* Anthracite band (page heads, footer) and the MSK green stripe. Both keep
+     their colours in both themes. */
+  --color-band: hsl(var(--band));
+  --color-band-foreground: hsl(var(--band-foreground));
+  --color-band-muted: hsl(var(--band-muted));
+  --color-band-line: hsl(var(--band-line));
+  --color-band-accent: hsl(var(--band-accent));
+  --color-band-accent-foreground: hsl(var(--band-accent-foreground));
+  --color-brand: hsl(var(--brand));
+
+  /* Chart series, after the shop's breakdown colours. */
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
+
+  /* Radii follow `--radius` (10 px): 4 px tags, 6 px controls, 10 px cards,
+     16 px for the few large surfaces. */
+  --radius-sm: calc(var(--radius) - 6px);
+  --radius-md: calc(var(--radius) - 4px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 6px);
 }
 
-html, body {
-  height: 100%;
+@theme {
+  /* Type, loaded locally through @fontsource-variable in app/layout.tsx.
+     Archivo for headings and names, Source Sans 3 for everything else, and
+     the system monospace for short codes, tokens and addresses. */
+  --font-sans: "Source Sans 3 Variable", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Archivo Variable", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+
+  /* Fluid type scale, phone to UWQHD. Every maximum is at most 2.5 times its
+     minimum, so browser zoom still reaches 200 % (WCAG 1.4.4). */
+  --text-display: clamp(2.25rem, 1.2rem + 2.4vw, 5rem);
+  --text-display--line-height: 1.06;
+  --text-h2: clamp(1.75rem, 1.2rem + 1.1vw, 3rem);
+  --text-h2--line-height: 1.15;
+  --text-h3: clamp(1.25rem, 1.05rem + 0.45vw, 1.75rem);
+  --text-h3--line-height: 1.25;
+  --text-lead: clamp(1.1875rem, 1rem + 0.35vw, 1.5rem);
+  --text-lead--line-height: 1.55;
+  --text-body: clamp(1.0625rem, 0.9rem + 0.2vw, 1.25rem);
+  --text-body--line-height: 1.6;
+  --text-small: clamp(0.9375rem, 0.85rem + 0.12vw, 1.0625rem);
+  --text-small--line-height: 1.5;
+  --text-label: clamp(0.8125rem, 0.75rem + 0.08vw, 0.9375rem);
+  --text-label--line-height: 1.4;
+
+  /* Shadows: a seam at rest, a lift on hover. Components write
+     `shadow-[var(--shadow-card)]`, which the .dark scope overrides. */
+  --shadow-card: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-card-hover: 0 8px 24px -8px rgb(0 0 0 / 0.12);
+
+  --animate-fade-in: fadeIn 0.2s ease-out;
 }
 
-body {
-  font-family: var(--font-sans), system-ui, sans-serif;
-  background:  #1b1b1d;
-  color:       #e3e3e3;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* ============================================================================
+   Source tokens: HSL channels, light default, dark override
+   ============================================================================ */
+@layer base {
+  :root {
+    --background: 60 10% 96.1%;
+    --foreground: 220 5.1% 11.6%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 5.1% 11.6%;
+    --muted: 60 7.7% 92.4%;
+    /* 5.64:1 on the tile, 6.12:1 on the ground, 6.62:1 on a card. */
+    --muted-foreground: 214.3 3.7% 36.7%;
+
+    /* Hairlines, never text. Fields and outline buttons take --input, which
+       reaches 3:1 on card and ground (WCAG 1.4.11). */
+    --border: 60 5.4% 85.5%;
+    --input: 214.3 2.9% 53.1%;
+    --ring: 125.3 50.3% 30.8%;
+
+    /* MSK green (#27762e): fill with a white label (5.65:1) and green text
+       on every light surface. */
+    --primary: 125.3 50.3% 30.8%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover-toward: #000000;
+    --accent-soft-amount: 7%;
+
+    --success: 125.3 50.3% 30.8%;
+    --warning: 31.1 89.4% 29.6%;
+    --info: 204.1 86.2% 31.2%;
+    --danger: 3.2 71.3% 41%;
+    --danger-foreground: 0 0% 100%;
+
+    --band: 216 6.2% 15.9%;
+    --band-foreground: 60 7.1% 94.5%;
+    --band-muted: 214.3 4.5% 69.2%;
+    --band-line: 214.3 5.6% 24.5%;
+    --band-accent: 94.9 48.1% 52.4%;
+    --band-accent-foreground: 120 17.9% 7.6%;
+    --brand: 125.3 50.3% 30.8%;
+
+    /* Green, blue, amber, rose, violet; each reaches 4.5:1 on a card. */
+    --chart-1: 125.3 50.3% 30.8%;
+    --chart-2: 204.1 86.2% 31.2%;
+    --chart-3: 31.1 89.4% 29.6%;
+    --chart-4: 345.3 82.7% 40.8%;
+    --chart-5: 274.9 72.2% 52%;
+
+    --radius: 0.625rem;
+  }
+
+  /* Anthracite, a palette of its own rather than an inversion. */
+  .dark {
+    --background: 220 5.9% 10%;
+    --foreground: 60 5% 92.2%;
+    --card: 225 5.7% 13.7%;
+    --card-foreground: 60 5% 92.2%;
+    --muted: 220 8.1% 7.3%;
+    --muted-foreground: 220 3.5% 66.7%;
+
+    --border: 220 5.8% 20.4%;
+    /* 3.20:1 on a card, 3.54:1 on the ground. */
+    --input: 217.5 3.5% 44.3%;
+    --ring: 97.1 50.8% 48.6%;
+
+    /* Green as text: 7.64:1 on the ground; the label on it is dark. */
+    --primary: 97.1 50.8% 48.6%;
+    --primary-foreground: 120 20% 6.9%;
+    --primary-hover-toward: #ffffff;
+    --accent-soft-amount: 10%;
+
+    --success: 97.1 50.8% 48.6%;
+    --warning: 33.2 70.6% 61.4%;
+    --info: 204.8 69.9% 67.5%;
+    --danger: 5.8 81.4% 72.5%;
+    --danger-foreground: 220 5.9% 10%;
+
+    --chart-1: 97.1 50.8% 48.6%;
+    --chart-2: 204.8 69.9% 67.5%;
+    --chart-3: 33.2 70.6% 61.4%;
+    --chart-4: 351.3 94.5% 71.4%;
+    --chart-5: 275.2 71.6% 66.9%;
+
+    --shadow-card: 0 1px 2px 0 rgb(0 0 0 / 0.4);
+    --shadow-card-hover: 0 12px 32px -8px rgb(0 0 0 / 0.6);
+  }
 }
 
-/* Scrollbar (MSK style) */
-::-webkit-scrollbar {
-  width:  4px;
-  height: 4px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background:    rgba(94, 177, 49, 0.3);
-  border-radius: 2px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(94, 177, 49, 0.5);
-}
-
-/* Selection */
-::selection {
-  background: rgba(94, 177, 49, 0.4);
-  color:      #ffffff;
+/* ----------------------------------------------------------------------------
+   Layout tokens: column, gutter and rhythm grow with the window through
+   clamp() instead of stepping at breakpoints.
+   ---------------------------------------------------------------------------- */
+:root {
+  /* Height of the sticky header bar, without its 4 px stripe. */
+  --header-height: clamp(3.75rem, 3rem + 1vw, 5rem);
+  --space-section: clamp(3rem, 1.5rem + 3.5vw, 7.5rem);
+  --space-stack: clamp(1.25rem, 0.75rem + 1vw, 2.5rem);
+  --page-gutter: clamp(1rem, 4vw, 7.5rem);
+  --page-column: clamp(72rem, 84vw, 180rem);
+  /* The tool's own column: a form reads best at a form's width. */
+  --tool-column: clamp(36rem, 28rem + 14vw, 56rem);
+  --grid-card: clamp(18rem, 16.25rem + 6.3vw, 30rem);
 }
 
-/* Focus ring */
-:focus-visible {
-  outline:        2px solid #5eb131;
-  outline-offset: 2px;
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: hsl(var(--border));
+  }
+
+  /* Tailwind v4 dropped `cursor: pointer` on buttons from its preflight. */
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Keeps an element scrolled to on focus clear of the sticky header
+       (WCAG 2.2 SC 2.4.11). */
+    scroll-padding-top: calc(var(--header-height) + 1rem);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, hsl(var(--primary)) 35%, transparent);
+    color: hsl(var(--foreground));
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+
+  /* One focus style for everything: a 3 px outline in the ring colour. */
+  :focus-visible {
+    outline: 3px solid hsl(var(--ring));
+    outline-offset: 2px;
+    border-radius: calc(var(--radius) - 6px);
+  }
+
+  /* The native date picker follows the theme. */
+  input[type="datetime-local"] {
+    color-scheme: light;
+  }
+  .dark input[type="datetime-local"] {
+    color-scheme: dark;
+  }
 }
 
-/* Heading utility */
-.font-heading {
-  font-family: var(--font-sans), system-ui, sans-serif;
-  font-weight: 800;
-  letter-spacing: -0.02em;
+/* ============================================================================
+   Keyframes
+   ============================================================================ */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
-/* Shiki — host theme styles for highlighted code */
-.shiki-wrap pre.shiki {
+/* ============================================================================
+   Utilities
+   ============================================================================ */
+/* The page shell: header, content and footer share one edge. */
+@utility container-page {
+  width: 100%;
+  max-width: calc(var(--page-column) + 2 * var(--page-gutter));
+  margin-inline: auto;
+  padding-inline: max(var(--page-gutter), env(safe-area-inset-left, 0px)) max(var(--page-gutter), env(safe-area-inset-right, 0px));
+}
+
+/* The tool's column: narrower than the site, fluid up to UWQHD. */
+@utility tool-column {
+  width: 100%;
+  max-width: calc(var(--tool-column) + 2 * var(--page-gutter));
+  margin-inline: auto;
+  padding-inline: max(var(--page-gutter), env(safe-area-inset-left, 0px)) max(var(--page-gutter), env(safe-area-inset-right, 0px));
+}
+
+/* Extends the hit area of a control to 44 px without changing its size. */
+@utility tap-target {
+  position: relative;
+}
+.tap-target::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(100%, 44px);
+  height: max(100%, 44px);
+  transform: translate(-50%, -50%);
+}
+
+/* Kicker: the small green label above a heading. */
+.kicker {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: var(--text-label);
+  line-height: var(--text-label--line-height);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: hsl(var(--primary));
+}
+
+/* The anthracite band. The focus ring changes with it: the page green
+   measures about 2.3:1 on anthracite. */
+.surface-band {
+  background-color: hsl(var(--band));
+  color: hsl(var(--band-foreground));
+}
+.surface-band .kicker { color: hsl(var(--band-accent)); }
+.surface-band :focus-visible { outline-color: hsl(var(--band-accent)); }
+
+/* Skip link (WCAG 2.4.1), the first child of the body. */
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.5rem 1rem;
+  border-radius: calc(var(--radius) - 6px);
+  background: hsl(var(--card));
+  color: hsl(var(--foreground));
+  border: 1px solid hsl(var(--border));
+  box-shadow: var(--shadow-card-hover);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transform: translateY(-300%);
+  transition: transform 0.2s;
+  z-index: 100;
+}
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* ============================================================================
+   Scrollbars
+   ============================================================================ */
+@media (pointer: fine) {
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: hsl(var(--muted)); }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 5px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground));
+  }
+}
+
+/* ============================================================================
+   Reduced motion, more contrast, forced colours
+   ============================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* "More contrast" in the system settings: secondary text and lines go to
+   full strength. */
+@media (prefers-contrast: more) {
+  :root, .dark {
+    --muted-foreground: var(--foreground);
+    --border: var(--input);
+    --band-muted: var(--band-foreground);
+    --band-line: var(--band-foreground);
+  }
+}
+
+/* Windows contrast themes replace every colour and drop backgrounds. */
+@media (forced-colors: active) {
+  button, [role="button"], select, input, textarea {
+    border: 1px solid ButtonText;
+  }
+  :focus-visible {
+    outline-color: Highlight;
+  }
+}
+
+/* ============================================================================
+   Code view (Shiki, src/lib/highlight.ts)
+   ============================================================================
+   Shiki renders two themes into CSS variables (`--shiki-light`,
+   `--shiki-dark`, defaultColor: false); the page picks one per theme. The
+   background is ours, not the theme's, so the code sits on the card in
+   both themes. Line numbers are drawn by CSS and are not part of the text
+   a visitor copies. */
+.code-view pre.shiki {
   margin: 0;
   padding: 1rem 1.25rem;
-  background: transparent !important;
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.875rem;
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 0.9375rem;
   line-height: 1.6;
   overflow: auto;
+  tab-size: 4;
 }
-
-.shiki-wrap pre.shiki code {
+.code-view pre.shiki,
+.code-view pre.shiki span {
+  color: var(--shiki-light);
+}
+.dark .code-view pre.shiki,
+.dark .code-view pre.shiki span {
+  color: var(--shiki-dark);
+}
+.code-view pre.shiki code {
   display: grid;
   counter-reset: step;
   counter-increment: step 0;
 }
-
-.shiki-wrap.line-numbers pre.shiki code .line::before {
+.code-view.line-numbers pre.shiki code .line::before {
   content: counter(step);
   counter-increment: step;
   width: 2.5rem;
   margin-right: 1.25rem;
   display: inline-block;
   text-align: right;
-  color: rgba(141, 144, 150, 0.55);
+  color: hsl(var(--muted-foreground));
   user-select: none;
 }
-
-.shiki-wrap.no-wrap pre.shiki {
+.code-view.no-wrap pre.shiki {
   white-space: pre;
 }
-.shiki-wrap.wrap pre.shiki {
+.code-view.wrap pre.shiki {
   white-space: pre-wrap;
   word-break: break-word;
 }
 
-/* Toast (no external library) */
+/* Copy confirmation: a polite status message at the bottom of the window. */
 .msk-toast {
   position: fixed;
   bottom: 1.5rem;
   left: 50%;
   transform: translateX(-50%);
-  background: #242526;
-  color: #e3e3e3;
-  border: 1px solid #5eb131;
-  border-radius: 8px;
+  background: hsl(var(--foreground));
+  color: hsl(var(--background));
+  border-radius: calc(var(--radius) - 4px);
   padding: 0.625rem 1.25rem;
-  font-size: 0.875rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-  animation: toastIn 0.3s ease-out, toastOut 0.3s ease-in 1.8s forwards;
+  font-size: var(--text-small);
+  box-shadow: var(--shadow-card-hover);
+  animation: var(--animate-fade-in);
   z-index: 60;
   pointer-events: none;
-}
-@keyframes toastIn {
-  from { opacity: 0; transform: translate(-50%, 10px); }
-  to   { opacity: 1; transform: translate(-50%, 0); }
-}
-@keyframes toastOut {
-  from { opacity: 1; }
-  to   { opacity: 0; transform: translate(-50%, -10px); }
 }

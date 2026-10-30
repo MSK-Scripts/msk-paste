@@ -1,6 +1,5 @@
 import { headers } from 'next/headers'
-import { Header } from '@/components/Header'
-import { Footer } from '@/components/Footer'
+import { SiteFrame } from '@/components/site/SiteFrame'
 import { PasteView } from '@/components/PasteView'
 import { PasswordPrompt } from '@/components/PasswordPrompt'
 import { StatusPanel } from '@/components/StatusPanel'
@@ -81,15 +80,11 @@ export default async function PastePage({ params }: PageProps) {
 
 function Page({ children, wide = false }: { children: React.ReactNode; wide?: boolean }) {
   return (
-    <main className="min-h-screen flex flex-col">
-      <Header />
-      <div className="flex-1 px-6 py-10">
-        <div className={wide ? 'max-w-5xl mx-auto' : 'max-w-3xl mx-auto'}>
-          {children}
-        </div>
+    <SiteFrame>
+      <div className={`${wide ? 'container-page' : 'tool-column'} py-[var(--space-section)]`}>
+        {children}
       </div>
-      <Footer />
-    </main>
+    </SiteFrame>
   )
 }
 

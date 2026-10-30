@@ -1,5 +1,6 @@
 'use client'
 
+import { useTheme } from 'next-themes'
 import { useEffect, useRef } from 'react'
 
 interface TurnstileApi {
@@ -39,6 +40,9 @@ export function TurnstileWidget({
   onToken: (token: string | null) => void
 }) {
   const ref = useRef<HTMLDivElement>(null)
+  // The widget follows the theme the visitor chose on this site.
+  const { resolvedTheme } = useTheme()
+  const theme = resolvedTheme === 'dark' ? 'dark' : 'light'
 
   useEffect(() => {
     let widgetId: string | null = null
@@ -52,7 +56,7 @@ export function TurnstileWidget({
         callback:           (token) => onToken(token),
         'expired-callback': () => onToken(null),
         'error-callback':   () => onToken(null),
-        theme:              'dark',
+        theme,
       })
       return true
     }
@@ -67,7 +71,7 @@ export function TurnstileWidget({
       if (poll) clearInterval(poll)
       if (widgetId && window.turnstile) window.turnstile.remove(widgetId)
     }
-  }, [siteKey, action, onToken])
+  }, [siteKey, action, onToken, theme])
 
   return <div ref={ref} className="min-h-[65px]" />
 }

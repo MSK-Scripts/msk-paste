@@ -13,19 +13,6 @@
     "submit": "Absenden",
     "optional": "optional"
   },
-  "header": {
-    "createNew": "Neue Paste",
-    "stats": "Statistik",
-    "docs": "Dokumentation",
-    "github": "GitHub",
-    "menu": "Menü"
-  },
-  "footer": {
-    "openSource": "Open Source unter AGPL-3.0",
-    "privacy": "Datenschutz",
-    "imprint": "Impressum",
-    "byBrand": "von MSK Scripts"
-  },
   "imprintPage": {
     "title": "Impressum",
     "section1Title": "Angaben gemäß § 5 DDG",
@@ -46,7 +33,29 @@
   },
   "home": {
     "title": "MSK Paste",
-    "subtitle": "Selbst-gehosteter Pastebin mit Syntax-Highlighting"
+    "subtitle": "Selbst-gehosteter Pastebin mit Syntax-Highlighting",
+    "kicker": "Web-Tool von MSK Scripts",
+    "formTitle": "Paste erstellen",
+    "statsLink": "Statistik",
+    "factsTitle": "Was MSK Paste kann",
+    "facts": {
+      "highlight": {
+        "title": "Syntax-Highlighting",
+        "text": "Lua, JavaScript, SQL und viele weitere Sprachen, auf dem Server eingefärbt, ohne Skript im Browser."
+      },
+      "expiry": {
+        "title": "Ablauf nach Wahl",
+        "text": "Von 10 Minuten bis zu einem Jahr. Danach wird die Paste endgültig gelöscht."
+      },
+      "protect": {
+        "title": "Passwort oder einmal lesen",
+        "text": "Schütze eine Paste mit einem Passwort oder lass sie nach dem ersten Aufruf verschwinden."
+      },
+      "raw": {
+        "title": "Roh, Download, Löschen",
+        "text": "Jede Paste gibt es als Rohtext und Download, und mit dem Lösch-Token entfernst du sie selbst."
+      }
+    }
   },
   "createForm": {
     "contentLabel": "Inhalt",
@@ -211,7 +220,7 @@
     },
     "thirdParty": {
       "title": "14. Schriftarten, Spam-Prüfung & Drittanbieter",
-      "text": "Schriftarten (Syne, DM Sans, JetBrains Mono) werden über das in Next.js integrierte Font-System (next/font) bereits zur Build-Zeit in die Anwendung aufgenommen und ausschließlich vom eigenen Server ausgeliefert. Zur Laufzeit findet keine Verbindung zu Schriftanbietern statt.\n\nSpam-Prüfung: Die Seite zum Erstellen einer Paste nutzt Cloudflare Turnstile, einen Dienst der Cloudflare, Inc. (101 Townsend St, San Francisco, CA 94107, USA), um Menschen von automatisierten Anfragen zu unterscheiden. Beim Aufruf dieser Seite lädt dein Browser ein Skript von challenges.cloudflare.com, und Turnstile wertet technische Daten wie deine IP-Adresse und Eigenschaften deines Browsers aus. Wir erhalten nur das Ergebnis der Prüfung. Auf Seiten, die eine Paste anzeigen, wird Turnstile nicht geladen. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO, unser berechtigtes Interesse am Schutz des Dienstes vor Spam und Missbrauch. Cloudflare ist unter dem EU-US Data Privacy Framework zertifiziert; zusätzlich gelten Standardvertragsklauseln. Datenschutzerklärung von Cloudflare: https://www.cloudflare.com/privacypolicy/\n\nEs werden keine weiteren externen Skripte, Schriften oder Tracking-Dienste geladen."
+      "text": "Die Schriftarten (Archivo und Source Sans 3) sind Teil der Anwendung und werden ausschließlich vom eigenen Server ausgeliefert. Es findet keine Verbindung zu Schriftanbietern wie Google Fonts statt.\n\nSpam-Prüfung: Die Seite zum Erstellen einer Paste nutzt Cloudflare Turnstile, einen Dienst der Cloudflare, Inc. (101 Townsend St, San Francisco, CA 94107, USA), um Menschen von automatisierten Anfragen zu unterscheiden. Beim Aufruf dieser Seite lädt dein Browser ein Skript von challenges.cloudflare.com, und Turnstile wertet technische Daten wie deine IP-Adresse und Eigenschaften deines Browsers aus. Wir erhalten nur das Ergebnis der Prüfung. Auf Seiten, die eine Paste anzeigen, wird Turnstile nicht geladen. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO, unser berechtigtes Interesse am Schutz des Dienstes vor Spam und Missbrauch. Cloudflare ist unter dem EU-US Data Privacy Framework zertifiziert; zusätzlich gelten Standardvertragsklauseln. Datenschutzerklärung von Cloudflare: https://www.cloudflare.com/privacypolicy/\n\nEs werden keine weiteren externen Skripte, Schriften oder Tracking-Dienste geladen."
     },
     "contact": {
       "title": "15. Kontakt",
@@ -263,5 +272,50 @@
     "reservedId": "Diese Paste-ID ist reserviert.",
     "idConflict": "Diese Paste-ID ist bereits vergeben.",
     "invalidPassword": "Falsches Passwort."
+  },
+  "site": {
+    "mainNav": "Hauptnavigation",
+    "submenu": "Mehr unter {name}",
+    "newTab": "(öffnet in neuem Tab)",
+    "fivem": "FiveM-Scripts",
+    "fivemPaid": "Bezahl-Scripts",
+    "fivemPaidDesc": "Jedes Script als Encrypted oder Source",
+    "fivemFree": "Kostenlose Scripts",
+    "fivemFreeDesc": "Open Source auf GitHub, samt msk_core",
+    "fivemAllAccess": "Alle Scripts im Abo",
+    "fivemAllAccessDesc": "Zugriff auf sämtliche Ressourcen, monatlich kündbar",
+    "fivemStats": "Serverstatistiken",
+    "fivemStatsDesc": "Live-Serverzahlen je Script",
+    "discord": "Discord-Bots",
+    "ticketDesc": "Tickets mit gehosteten Transkripten und Dashboard",
+    "giveawayDesc": "Verlosungen mit öffentlichen Ergebnisseiten",
+    "tools": "Web-Tools",
+    "images": "Bildergalerie",
+    "imagesDesc": "Freigestellte Bilder von Fahrzeugen, Waffen und Items",
+    "formsDesc": "Formulare und Bewerbungen mit Discord-Anbindung",
+    "pasteDesc": "Code-Schnipsel mit deinem Team teilen",
+    "shortenerDesc": "Kurzlinks ohne Cookies und Tracker",
+    "about": "Über MSK",
+    "builtBy": "Erstellt von",
+    "menu": "Menü",
+    "language": "Sprache",
+    "stats": "Statistik",
+    "footerTagline": "Code-Schnipsel teilen, ohne Konto und ohne Tracker, von MSK Scripts.",
+    "license": "Open Source unter AGPL-3.0",
+    "footerProduct": "Produkt",
+    "footerEcosystem": "Ökosystem",
+    "footerLegal": "Rechtliches",
+    "documentation": "Dokumentation",
+    "github": "GitHub",
+    "imprint": "Impressum",
+    "privacy": "Datenschutz",
+    "rights": "Alle Rechte vorbehalten.",
+    "skipToContent": "Zum Inhalt springen",
+    "theme": {
+      "group": "Darstellung",
+      "system": "System",
+      "light": "Hell",
+      "dark": "Dunkel"
+    }
   }
 }

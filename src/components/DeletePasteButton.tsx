@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
+import { Check } from '@/components/icons'
 
 interface DeletePasteButtonProps {
   pasteId: string
@@ -46,7 +47,7 @@ export function DeletePasteButton({ pasteId }: DeletePasteButtonProps) {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="text-xs text-msk-danger/80 hover:text-msk-danger transition-colors"
+        className="text-small text-danger/80 hover:text-danger transition-colors"
       >
         {tView('deletePaste')}
       </button>
@@ -58,22 +59,20 @@ export function DeletePasteButton({ pasteId }: DeletePasteButtonProps) {
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-md bg-msk-surface border border-msk-border rounded-xl p-6 animate-slide-up"
+            className="w-full max-w-md bg-card border border-border rounded-xl p-6 animate-fade-in"
           >
             {done ? (
               <div className="text-center py-4">
-                <div className="mx-auto w-12 h-12 rounded-full bg-msk-accent/15 flex items-center justify-center mb-3">
-                  <svg className="w-6 h-6 text-msk-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                  </svg>
+                <div className="mx-auto w-12 h-12 rounded-full bg-primary/15 flex items-center justify-center mb-3">
+                  <Check className="w-6 h-6 text-primary" />
                 </div>
-                <h2 className="font-heading text-lg text-msk-text">{t('successTitle')}</h2>
-                <p className="text-sm text-msk-muted mt-1">{t('successText')}</p>
+                <h2 className="font-display text-lg text-foreground">{t('successTitle')}</h2>
+                <p className="text-small text-muted-foreground mt-1">{t('successText')}</p>
               </div>
             ) : (
               <>
-                <h2 className="font-heading text-lg text-msk-text mb-4">{t('title')}</h2>
-                <label className="block text-sm text-msk-muted mb-2">{t('tokenLabel')}</label>
+                <h2 className="font-display text-lg text-foreground mb-4">{t('title')}</h2>
+                <label className="block text-small text-muted-foreground mb-2">{t('tokenLabel')}</label>
                 <input
                   type="text"
                   value={token}
@@ -81,17 +80,17 @@ export function DeletePasteButton({ pasteId }: DeletePasteButtonProps) {
                   placeholder={t('tokenPlaceholder')}
                   disabled={submitting}
                   autoFocus
-                  className="w-full px-4 py-2.5 bg-msk-bg border border-msk-border rounded-lg text-msk-text placeholder:text-msk-dim focus:border-msk-accent focus:outline-none font-mono text-sm disabled:opacity-50"
+                  className="w-full px-4 py-2.5 bg-muted border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus-visible:border-primary font-mono text-small disabled:opacity-50"
                 />
                 {error && (
-                  <p className="mt-2 text-sm text-msk-danger">{error}</p>
+                  <p className="mt-2 text-small text-danger">{error}</p>
                 )}
                 <div className="flex items-center justify-end gap-2 mt-5">
                   <button
                     type="button"
                     onClick={() => setOpen(false)}
                     disabled={submitting}
-                    className="px-4 py-2 text-sm text-msk-muted hover:text-msk-text transition-colors"
+                    className="px-4 py-2 text-small text-muted-foreground hover:text-foreground transition-colors"
                   >
                     {tCommon('cancel')}
                   </button>
@@ -99,7 +98,7 @@ export function DeletePasteButton({ pasteId }: DeletePasteButtonProps) {
                     type="button"
                     onClick={submit}
                     disabled={submitting || token.trim().length === 0}
-                    className="px-4 py-2 text-sm bg-msk-danger/90 hover:bg-msk-danger disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg font-medium transition-colors"
+                    className="px-4 py-2 text-small bg-danger/90 hover:bg-danger disabled:opacity-50 disabled:cursor-not-allowed text-primary-foreground rounded-lg font-medium transition-colors"
                   >
                     {submitting ? t('submitting') : t('submit')}
                   </button>

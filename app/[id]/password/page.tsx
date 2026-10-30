@@ -1,7 +1,6 @@
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { Header } from '@/components/Header'
-import { Footer } from '@/components/Footer'
+import { SiteFrame } from '@/components/site/SiteFrame'
 import { PasswordPrompt } from '@/components/PasswordPrompt'
 import { StatusPanel } from '@/components/StatusPanel'
 import { getPasteRow, isPasteExpired, pasteHasPassword } from '@/lib/paste'
@@ -46,13 +45,11 @@ export default async function PasswordPage({ params }: PageProps) {
 
 function Page({ children }: { children: React.ReactNode }) {
   return (
-    <main className="min-h-screen flex flex-col">
-      <Header />
-      <div className="flex-1 px-6 py-16">
+    <SiteFrame>
+      <div className="tool-column py-[var(--space-section)]">
         <div className="max-w-md mx-auto">{children}</div>
       </div>
-      <Footer />
-    </main>
+    </SiteFrame>
   )
 }
 
