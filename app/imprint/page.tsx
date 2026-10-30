@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server'
-import { Header } from '@/components/Header'
-import { Footer } from '@/components/Footer'
+import { PageHead } from '@/components/site/PageHead'
+import { SiteFrame } from '@/components/site/SiteFrame'
 
 export async function generateMetadata() {
   const t = await getTranslations('imprintPage')
@@ -11,84 +11,79 @@ export default async function ImprintPage() {
   const t = await getTranslations('imprintPage')
 
   return (
-    <main className="min-h-screen flex flex-col">
-      <Header backLink={{ href: '/' }} />
-
-      <div className="flex-1 px-6 py-10">
-        <article className="max-w-3xl mx-auto space-y-8">
-
-          <header>
-            <h1 className="font-heading text-3xl text-msk-text">{t('title')}</h1>
-          </header>
+    <SiteFrame>
+      <PageHead title={t('title')} />
+      <div className="tool-column py-[var(--space-section)]">
+        <article className="grid max-w-[65ch] gap-8">
 
           <section className="space-y-2">
-            <h2 className="font-heading text-xl text-msk-text">
+            <h2 className="font-display text-h3 font-[650] text-foreground">
               {t('section1Title')}
             </h2>
-            <div className="bg-msk-surface/40 border border-msk-border rounded-lg p-4">
-              <p className="text-msk-text font-medium">{t('addressName')}</p>
-              <p className="text-sm text-msk-muted whitespace-pre-line mt-1">
+            <div className="bg-card/40 border border-border rounded-lg p-4">
+              <p className="text-foreground font-medium">{t('addressName')}</p>
+              <p className="text-small text-muted-foreground whitespace-pre-line mt-1">
                 {t('addressLines')}
               </p>
             </div>
           </section>
 
           <section className="space-y-2">
-            <h2 className="font-heading text-xl text-msk-text">
+            <h2 className="font-display text-h3 font-[650] text-foreground">
               {t('contactTitle')}
             </h2>
-            <p className="text-sm text-msk-muted">{t('contactEmail')}</p>
+            <p className="text-small text-muted-foreground">{t('contactEmail')}</p>
           </section>
 
           <section className="space-y-2">
-            <h3 className="font-heading text-lg text-msk-text">
+            <h3 className="font-display text-lg text-foreground">
               {t('noAdsTitle')}
             </h3>
-            <p className="text-sm text-msk-muted leading-relaxed">
+            <p className="text-small text-muted-foreground leading-relaxed">
               {t('noAdsText')}
             </p>
           </section>
 
           <section className="space-y-2">
-            <h2 className="font-heading text-xl text-msk-text">
+            <h2 className="font-display text-h3 font-[650] text-foreground">
               {t('responsibleTitle')}
             </h2>
-            <div className="bg-msk-surface/40 border border-msk-border rounded-lg p-4">
-              <p className="text-msk-text font-medium">{t('addressName')}</p>
-              <p className="text-sm text-msk-muted whitespace-pre-line mt-1">
+            <div className="bg-card/40 border border-border rounded-lg p-4">
+              <p className="text-foreground font-medium">{t('addressName')}</p>
+              <p className="text-small text-muted-foreground whitespace-pre-line mt-1">
                 {t('addressLines')}
               </p>
             </div>
           </section>
 
           <section className="space-y-2">
-            <h2 className="font-heading text-xl text-msk-text">
+            <h2 className="font-display text-h3 font-[650] text-foreground">
               {t('disputeTitle')}
             </h2>
-            <p className="text-sm text-msk-muted leading-relaxed">
+            <p className="text-small text-muted-foreground leading-relaxed">
               {t('disputeText')}
             </p>
           </section>
 
           <section className="space-y-3">
-            <h2 className="font-heading text-xl text-msk-text">
+            <h2 className="font-display text-h3 font-[650] text-foreground">
               {t('liabilityTitle')}
             </h2>
 
             <div className="space-y-2">
-              <h3 className="font-heading text-lg text-msk-text">
+              <h3 className="font-display text-lg text-foreground">
                 {t('liabilityContentTitle')}
               </h3>
-              <p className="text-sm text-msk-muted leading-relaxed">
+              <p className="text-small text-muted-foreground leading-relaxed">
                 {t('liabilityContentText')}
               </p>
             </div>
 
             <div className="space-y-2">
-              <h3 className="font-heading text-lg text-msk-text">
+              <h3 className="font-display text-lg text-foreground">
                 {t('liabilityLinksTitle')}
               </h3>
-              <p className="text-sm text-msk-muted leading-relaxed">
+              <p className="text-small text-muted-foreground leading-relaxed">
                 {t('liabilityLinksText')}
               </p>
             </div>
@@ -97,7 +92,6 @@ export default async function ImprintPage() {
         </article>
       </div>
 
-      <Footer />
-    </main>
+    </SiteFrame>
   )
 }

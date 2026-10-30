@@ -6,6 +6,7 @@ import type { ApiError, CreatePasteResponse, ExpiresIn } from '@/types'
 import { SUPPORTED_LANGUAGES } from '@/lib/languages'
 import { PasteResult } from './PasteResult'
 import { TurnstileWidget } from './TurnstileWidget'
+import { ArrowRight, CaretRight, CircleNotch, Eye, EyeSlash } from '@/components/icons'
 
 const MAX_BYTES = 1_048_576 // 1 MB (kept in sync with .env)
 const EXPIRES_IN_OPTIONS: ExpiresIn[] = ['10min', '1h', '1d', '1w', '1mo', '1y']
@@ -150,9 +151,9 @@ export function CreatePasteForm({
 
       {/* Title */}
       <div>
-        <label htmlFor="title" className="block text-sm font-medium text-msk-text mb-2">
+        <label htmlFor="title" className="block text-small font-medium text-foreground mb-2">
           {t('titleLabel')}{' '}
-          <span className="text-msk-muted font-normal">({tCommon('optional')})</span>
+          <span className="text-muted-foreground font-normal">({tCommon('optional')})</span>
         </label>
         <input
           id="title"
@@ -162,20 +163,20 @@ export function CreatePasteForm({
           placeholder={t('titlePlaceholder')}
           maxLength={100}
           disabled={isLoading}
-          className="w-full px-4 py-3 bg-msk-surface border border-msk-border rounded-lg text-msk-text placeholder:text-msk-dim focus:border-msk-accent focus:outline-none transition-colors disabled:opacity-50"
+          className="w-full px-4 py-3 bg-card border-[1.5px] border-input rounded-md text-foreground placeholder:text-muted-foreground focus-visible:border-primary transition-colors disabled:opacity-50"
         />
         {fieldErrors.title && (
-          <p className="mt-1.5 text-sm text-msk-danger">{fieldErrors.title.join(', ')}</p>
+          <p className="mt-1.5 text-small text-danger">{fieldErrors.title.join(', ')}</p>
         )}
       </div>
 
       {/* Content */}
       <div>
         <div className="flex items-center justify-between mb-2">
-          <label htmlFor="content" className="block text-sm font-medium text-msk-text">
+          <label htmlFor="content" className="block text-small font-medium text-foreground">
             {t('contentLabel')}
           </label>
-          <span className={`text-xs font-mono ${usedBytes > MAX_BYTES ? 'text-msk-danger' : 'text-msk-muted'}`}>
+          <span className={`text-small font-mono ${usedBytes > MAX_BYTES ? 'text-danger' : 'text-muted-foreground'}`}>
             {t('sizeUsed', { bytes: usedBytes, max: MAX_BYTES })}
           </span>
         </div>
@@ -188,17 +189,17 @@ export function CreatePasteForm({
           rows={16}
           disabled={isLoading}
           spellCheck={false}
-          className="w-full px-4 py-3 bg-msk-surface border border-msk-border rounded-lg text-msk-text placeholder:text-msk-dim focus:border-msk-accent focus:outline-none transition-colors disabled:opacity-50 font-mono text-sm leading-relaxed resize-y"
+          className="w-full px-4 py-3 bg-card border-[1.5px] border-input rounded-md text-foreground placeholder:text-muted-foreground focus-visible:border-primary transition-colors disabled:opacity-50 font-mono text-small leading-relaxed resize-y"
         />
         {fieldErrors.content && (
-          <p className="mt-1.5 text-sm text-msk-danger">{fieldErrors.content.join(', ')}</p>
+          <p className="mt-1.5 text-small text-danger">{fieldErrors.content.join(', ')}</p>
         )}
       </div>
 
       {/* Language + Expiration */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div>
-          <label htmlFor="language" className="block text-sm font-medium text-msk-text mb-2">
+          <label htmlFor="language" className="block text-small font-medium text-foreground mb-2">
             {t('languageLabel')}
           </label>
           <select
@@ -206,7 +207,7 @@ export function CreatePasteForm({
             value={language}
             onChange={(e) => setLanguage(e.target.value)}
             disabled={isLoading}
-            className="w-full px-4 py-3 bg-msk-surface border border-msk-border rounded-lg text-msk-text focus:border-msk-accent focus:outline-none transition-colors disabled:opacity-50"
+            className="w-full px-4 py-3 bg-card border-[1.5px] border-input rounded-md text-foreground focus-visible:border-primary transition-colors disabled:opacity-50"
           >
             {SUPPORTED_LANGUAGES.map((lang) => (
               <option key={lang} value={lang}>{tl(lang)}</option>
@@ -215,7 +216,7 @@ export function CreatePasteForm({
         </div>
 
         <div>
-          <label htmlFor="expiresIn" className="block text-sm font-medium text-msk-text mb-2">
+          <label htmlFor="expiresIn" className="block text-small font-medium text-foreground mb-2">
             {t('expirationLabel')}
           </label>
           <select
@@ -223,7 +224,7 @@ export function CreatePasteForm({
             value={expiresIn}
             onChange={(e) => setExpiresIn(e.target.value as ExpiresIn)}
             disabled={isLoading}
-            className="w-full px-4 py-3 bg-msk-surface border border-msk-border rounded-lg text-msk-text focus:border-msk-accent focus:outline-none transition-colors disabled:opacity-50"
+            className="w-full px-4 py-3 bg-card border-[1.5px] border-input rounded-md text-foreground focus-visible:border-primary transition-colors disabled:opacity-50"
           >
             {EXPIRES_IN_OPTIONS.map((opt) => (
               <option key={opt} value={opt}>{t(`expiration.${opt}`)}</option>
@@ -236,25 +237,20 @@ export function CreatePasteForm({
       <button
         type="button"
         onClick={() => setShowAdvanced(!showAdvanced)}
-        className="text-sm text-msk-muted hover:text-msk-accent transition-colors flex items-center gap-1.5"
+        className="text-small text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5"
       >
-        <svg
-          className={`w-4 h-4 transition-transform ${showAdvanced ? 'rotate-90' : ''}`}
-          fill="none" stroke="currentColor" viewBox="0 0 24 24"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </svg>
+        <CaretRight className={`w-4 h-4 transition-transform ${showAdvanced ? 'rotate-90' : ''}`} />
         {t('advancedToggle')}
       </button>
 
       {showAdvanced && (
-        <div className="animate-slide-up space-y-5 pl-5 border-l-2 border-msk-border">
+        <div className="animate-fade-in space-y-5 pl-5 border-l-2 border-border">
 
           {/* Password */}
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-msk-text mb-2">
+            <label htmlFor="password" className="block text-small font-medium text-foreground mb-2">
               {t('passwordLabel')}{' '}
-              <span className="text-msk-muted font-normal">({tCommon('optional')})</span>
+              <span className="text-muted-foreground font-normal">({tCommon('optional')})</span>
             </label>
             <div className="relative">
               <input
@@ -267,31 +263,23 @@ export function CreatePasteForm({
                 maxLength={128}
                 disabled={isLoading}
                 autoComplete="new-password"
-                className="w-full px-4 py-3 pr-12 bg-msk-surface border border-msk-border rounded-lg text-msk-text placeholder:text-msk-dim focus:border-msk-accent focus:outline-none transition-colors disabled:opacity-50"
+                className="w-full px-4 py-3 pr-12 bg-card border-[1.5px] border-input rounded-md text-foreground placeholder:text-muted-foreground focus-visible:border-primary transition-colors disabled:opacity-50"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-msk-muted hover:text-msk-text transition-colors"
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-muted-foreground hover:text-foreground transition-colors"
                 tabIndex={-1}
               >
                 {showPassword ? (
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                      d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
-                  </svg>
+                  <EyeSlash className="w-5 h-5" />
                 ) : (
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                  </svg>
+                  <Eye className="w-5 h-5" />
                 )}
               </button>
             </div>
             {fieldErrors.password && (
-              <p className="mt-1.5 text-sm text-msk-danger">{fieldErrors.password.join(', ')}</p>
+              <p className="mt-1.5 text-small text-danger">{fieldErrors.password.join(', ')}</p>
             )}
           </div>
 
@@ -303,23 +291,23 @@ export function CreatePasteForm({
                 checked={burnAfterRead}
                 onChange={(e) => setBurnAfterRead(e.target.checked)}
                 disabled={isLoading}
-                className="mt-1 accent-msk-accent w-4 h-4 cursor-pointer"
+                className="mt-1 accent-primary w-4 h-4 cursor-pointer"
               />
               <span>
-                <span className="block text-sm font-medium text-msk-text">{t('burnLabel')}</span>
-                <span className="block text-xs text-msk-muted mt-0.5">{t('burnHint')}</span>
+                <span className="block text-small font-medium text-foreground">{t('burnLabel')}</span>
+                <span className="block text-small text-muted-foreground mt-0.5">{t('burnHint')}</span>
               </span>
             </label>
           </div>
 
           {/* Custom ID */}
           <div>
-            <label htmlFor="customId" className="block text-sm font-medium text-msk-text mb-2">
+            <label htmlFor="customId" className="block text-small font-medium text-foreground mb-2">
               {t('customIdLabel')}{' '}
-              <span className="text-msk-muted font-normal">({tCommon('optional')})</span>
+              <span className="text-muted-foreground font-normal">({tCommon('optional')})</span>
             </label>
             <div className="flex items-stretch">
-              <span className="px-3 inline-flex items-center bg-msk-surface2 border border-r-0 border-msk-border rounded-l-lg text-sm text-msk-muted font-mono">
+              <span className="px-3 inline-flex items-center bg-muted border border-r-0 border-input rounded-l-md text-small text-muted-foreground font-mono">
                 paste.msk-scripts.de/
               </span>
               <input
@@ -330,12 +318,12 @@ export function CreatePasteForm({
                 placeholder={t('customIdPlaceholder')}
                 pattern="[a-zA-Z0-9_-]{4,32}"
                 disabled={isLoading}
-                className="flex-1 px-4 py-3 bg-msk-surface border border-msk-border rounded-r-lg text-msk-text placeholder:text-msk-dim focus:border-msk-accent focus:outline-none transition-colors disabled:opacity-50 font-mono text-sm"
+                className="flex-1 px-4 py-3 bg-card border-[1.5px] border-input rounded-r-md text-foreground placeholder:text-muted-foreground focus-visible:border-primary transition-colors disabled:opacity-50 font-mono text-small"
               />
             </div>
-            <p className="mt-1.5 text-xs text-msk-muted">{t('customIdHint')}</p>
+            <p className="mt-1.5 text-small text-muted-foreground">{t('customIdHint')}</p>
             {fieldErrors.customId && (
-              <p className="mt-1.5 text-sm text-msk-danger">{fieldErrors.customId.join(', ')}</p>
+              <p className="mt-1.5 text-small text-danger">{fieldErrors.customId.join(', ')}</p>
             )}
           </div>
         </div>
@@ -366,7 +354,7 @@ export function CreatePasteForm({
       )}
 
       {error && (
-        <div role="alert" className="px-4 py-3 bg-msk-danger/10 border border-msk-danger/30 rounded-lg text-sm text-msk-danger animate-fade-in">
+        <div role="alert" className="px-4 py-3 bg-danger/8 border border-danger/40 rounded-lg text-small text-danger animate-fade-in">
           {error}
         </div>
       )}
@@ -374,22 +362,17 @@ export function CreatePasteForm({
       <button
         type="submit"
         disabled={isLoading || !content.trim() || usedBytes > MAX_BYTES || (siteKey !== null && !captchaToken)}
-        className="w-full px-6 py-3.5 bg-msk-accent hover:bg-msk-hover disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
+        className="w-full px-6 py-3.5 bg-primary hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed text-primary-foreground rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
       >
         {isLoading ? (
           <>
-            <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" className="opacity-25" />
-              <path fill="currentColor" className="opacity-75" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
-            </svg>
+            <CircleNotch className="w-4 h-4 animate-spin" />
             {t('submitting')}
           </>
         ) : (
           <>
             {t('submit')}
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
+            <ArrowRight className="w-4 h-4" />
           </>
         )}
       </button>

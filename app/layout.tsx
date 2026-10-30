@@ -1,23 +1,16 @@
 import type { Metadata, Viewport } from 'next'
+import { headers } from 'next/headers'
 import { NextIntlClientProvider } from 'next-intl'
-import { getLocale } from 'next-intl/server'
-import { Inter, JetBrains_Mono } from 'next/font/google'
+import { getLocale, getTranslations } from 'next-intl/server'
+
+// Fonts come from the @fontsource-variable packages and are served by this
+// app itself, like on msk-scripts.de: nothing is fetched from Google, neither
+// at build time nor in the browser.
+import '@fontsource-variable/archivo/standard.css'
+import '@fontsource-variable/source-sans-3'
 import './globals.css'
 
-// Fonts are downloaded at build time by `next/font/google`, bundled into
-// the build output, and served exclusively from this app's own origin.
-// No runtime connection to Google CDN is made.
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-sans',
-  display:  'swap',
-})
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-mono',
-  display:  'swap',
-})
+import { ThemeProvider } from '@/components/theme/ThemeProvider'
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL ?? 'https://paste.msk-scripts.de'),
@@ -55,8 +48,12 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor:   '#1b1b1d',
-  colorScheme:  'dark',
+  // The card colour of the header bar in each theme.
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#212225' },
+  ],
+  colorScheme:  'light dark',
   width:        'device-width',
   initialScale: 1,
 }
@@ -66,16 +63,20 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const locale = await getLocale()
-
-  const fontClasses = `${inter.variable} ${jetbrainsMono.variable}`
+  const [locale, t] = await Promise.all([getLocale(), getTranslations('site')])
+  // next-themes writes a small inline script against a flash of the wrong
+  // theme; under the nonce CSP it needs the request's nonce.
+  const nonce = (await headers()).get('x-nonce') ?? undefined
 
   return (
-    <html lang={locale} className={`dark ${fontClasses}`}>
-      <body className="min-h-screen bg-msk-bg text-msk-text antialiased">
-        <NextIntlClientProvider>
-          {children}
-        </NextIntlClientProvider>
+    <html lang={locale} suppressHydrationWarning>
+      <body className="font-sans antialiased">
+        <a href="#main" className="skip-link">
+          {t('skipToContent')}
+        </a>
+        <ThemeProvider nonce={nonce}>
+          <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

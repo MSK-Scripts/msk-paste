@@ -1,165 +1,52 @@
+<div align="center">
+
 # MSK Paste
 
-> A privacy-friendly, self-hosted pastebin alternative — part of the
-> [MSK Scripts](https://www.msk-scripts.de) ecosystem alongside
-> [MSK Shortener](https://s.msk-scripts.de).
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-27762e.svg)](LICENSE.md)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6)](https://www.typescriptlang.org)
 
-[![License: AGPL-3.0](https://img.shields.io/badge/license-AGPL--3.0-blue.svg)](LICENSE.md)
-[![Built with Next.js](https://img.shields.io/badge/Built%20with-Next.js%2015-000000?logo=next.js)](https://nextjs.org)
+**Self-hosted pastebin with syntax highlighting, expiry and password protection.**
 
-**Live:** [paste.msk-scripts.de](https://paste.msk-scripts.de)
+</div>
 
----
+MSK Paste shares code and text under a short link: highlighted on the server, with an expiry you
+choose, an optional password or deletion after the first view, and a delete token instead of an
+account. No tracking, no analytics.
 
-## ✨ Features
+It is part of the MSK Scripts ecosystem and runs at **[paste.msk-scripts.de](https://paste.msk-scripts.de)**.
+You are welcome to use it there or to host your own instance.
 
-- 📝 **Plain-text pastes** with optional title (up to 1 MB)
-- 🎨 **Syntax highlighting** for 30+ languages via [Shiki](https://shiki.style)
-- ⏱️ **Expiration** — 10 min · 1 h · 1 d · 1 w · 1 mo · 1 y
-- 🔥 **Burn after read** — paste self-destructs after the first view
-- 🔒 **Password protection** with bcrypt (cost 12)
-- 🔗 **Custom paste IDs** (`paste.msk-scripts.de/my-snippet`)
-- 🛠️ **REST API** for CLI / scripting workflows
-- 🌍 **Bilingual UI** (German / English) with cookie-based switching
-- 📊 **Public stats page** — aggregate numbers only
-- 🛡️ **Privacy by default** — no analytics, no GeoIP, IP addresses stored
-  only as HMAC-SHA-256 hashes
-
-## 🛡️ Privacy & Security
-
-- **No tracking, no analytics.** The only third-party script is Cloudflare Turnstile on the create page.
-- **Spam protection:** Turnstile, a honeypot, a signed form timestamp, daily limits per address and
-  content checks (encoded files, link spam, repeats). Scripts need an API key.
-- **IPs are never stored.** Rate limiting uses HMAC-SHA-256(ip, secret).
-- **Passwords** are stored as bcrypt hashes (cost 12) only.
-- **Expired pastes are deleted**, not soft-deleted.
-- **Cookies:** exactly one — `NEXT_LOCALE` for the language preference.
-
-See [`/privacy`](https://paste.msk-scripts.de/privacy) for the full policy.
-
-## 🚀 Tech stack
-
-| Layer        | Choice                                  |
-|--------------|-----------------------------------------|
-| Framework    | Next.js 15 (App Router) + TypeScript    |
-| Database     | MariaDB via `mysql2`                    |
-| Styling      | Tailwind CSS + MSK design tokens        |
-| Validation   | Zod 4                                   |
-| i18n         | next-intl v4 (cookie-based, no prefix)  |
-| Highlighting | Shiki (server-rendered)                 |
-| Password     | bcryptjs                                |
-| Charts       | Recharts                                |
-| Hosting      | Debian + Apache2 reverse proxy + systemd|
-| CI/CD        | GitHub Actions (SCP + SSH)              |
-
-Deliberately **not** used: Prisma, Redis, any analytics, any auth provider.
-
-## 🏃 Quick start (development)
+## Quick start
 
 ```bash
-# 1. Clone & install
 git clone https://github.com/MSK-Scripts/msk-paste.git
 cd msk-paste
 npm install
-
-# 2. Configure environment
-cp .env.example .env
-# Edit .env: set DB credentials and IP_HASH_SECRET (openssl rand -hex 32)
-
-# 3. Run migrations
+cp .env.example .env   # database credentials and IP_HASH_SECRET
 npm run migrate
-
-# 4. Start the dev server
-npm run dev
-# → http://localhost:3000
+npm run dev            # http://localhost:3000
 ```
 
-For a production deploy on Debian/Ubuntu use the install script:
+## Documentation
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/MSK-Scripts/msk-paste/main/deployment/scripts/install.sh | sudo bash
-```
+| Topic | |
+|---|---|
+| [Features](docs/features.md) | What MSK Paste does |
+| [Development](docs/development.md) | Tech stack, local setup, scripts |
+| [REST API and API keys](docs/api.md) | Endpoints, examples, issuing keys on the server |
+| [Security and privacy](docs/security-privacy.md) | What is stored, spam protection |
+| [Design system](DESIGN.md) | Colours, type, layout, the code view |
+| [Deployment guide](deployment/README.md) | Apache, MariaDB, systemd, CI/CD |
+| [Contributing, support and license](docs/contributing-and-license.md) | Contact, the AGPL in short |
 
-Details: [`deployment/README.md`](deployment/README.md).
+## Help and contributing
 
-## 📡 REST API
+Questions and bugs go to the [issue tracker](https://github.com/MSK-Scripts/msk-paste/issues);
+security issues as described in [SECURITY.md](SECURITY.md). Contributions are welcome: please open
+an issue before larger changes, keep pull requests focused and read [CONTRIBUTING.md](CONTRIBUTING.md).
 
-Reading is open. Creating a paste from a script needs an API key, issued by the operator on the
-server (see [API keys](#-api-keys)); without one, `POST /api/pastes` only accepts the site's own form.
+## License
 
-### `POST /api/pastes`
-
-```bash
-curl -X POST https://paste.msk-scripts.de/api/pastes \
-  -H 'Authorization: Bearer mskp_…' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "content":       "console.log(\"hello world\")",
-    "title":         "My snippet",
-    "language":      "javascript",
-    "expiresIn":     "1w",
-    "burnAfterRead": false
-  }'
-```
-
-Response:
-
-```json
-{
-  "pasteId":       "X7q9bA2k",
-  "url":           "https://paste.msk-scripts.de/X7q9bA2k",
-  "rawUrl":        "https://paste.msk-scripts.de/raw/X7q9bA2k",
-  "deleteToken":   "dk_a7c4f2e1...",
-  "expiresAt":     "2026-05-20T16:00:00.000Z",
-  "hasPassword":   false,
-  "burnAfterRead": false
-}
-```
-
-| Method   | Path                          | Purpose                              |
-|----------|-------------------------------|--------------------------------------|
-| `POST`   | `/api/pastes`                 | Create a paste (API key required)    |
-| `GET`    | `/api/pastes/:id`             | Fetch paste metadata + content       |
-| `POST`   | `/api/pastes/:id/verify`      | Verify password, returns content     |
-| `DELETE` | `/api/pastes/:id?token=…`     | Delete a paste with its delete token |
-| `GET`    | `/api/stats`                  | Aggregate statistics                 |
-| `POST`   | `/api/locale`                 | Set language cookie (`de` / `en`)    |
-
-## 🛠️ Scripts
-
-```bash
-npm run dev          # Start Next.js dev server
-npm run build        # Production build
-npm start            # Start production server on port 3012
-npm run lint         # ESLint
-npm run type-check   # TypeScript --noEmit
-npm run migrate      # Apply DB migrations
-npm run cleanup      # Delete expired pastes (run via cron)
-npm run api-key -- help   # Manage API keys (see below)
-```
-
-## 🔑 API keys
-
-Only someone with a shell on the server and read access to the app's `.env` can manage keys. A key is
-shown once when it is created; the database keeps only a scrypt hash of it.
-
-```bash
-/opt/msk-paste/scripts/api-key.sh help                     # all commands
-/opt/msk-paste/scripts/api-key.sh list                     # id, prefix, label, last use, state
-/opt/msk-paste/scripts/api-key.sh create "<label>"         # issue a key
-/opt/msk-paste/scripts/api-key.sh revoke <key|prefix|id>   # block it, keep the row
-/opt/msk-paste/scripts/api-key.sh delete <key|prefix|id>   # remove it
-```
-
-## 📜 License
-
-[AGPL-3.0-or-later](LICENSE.md) — if you fork or host MSK Paste publicly,
-please share your source code under the same license.
-
-## 🙋 Support / contact
-
-Author: **Musiker15 — MSK Scripts**
-Email: `info@msk-scripts.de`
-Website: [www.msk-scripts.de](https://www.msk-scripts.de)
-
-Issues and feature requests → [GitHub Issues](https://github.com/MSK-Scripts/msk-paste/issues)
+[GNU Affero General Public License v3.0 or later](LICENSE.md) © [MSK Scripts](https://msk-scripts.de).
+If you fork MSK Paste or host it publicly, share your source code under the same license.
