@@ -74,7 +74,19 @@
     "submit": "Create paste",
     "submitting": "Creating…",
     "networkError": "Network error – please try again",
-    "sizeUsed": "{bytes} / {max} bytes"
+    "sizeUsed": "{bytes} / {max} bytes",
+    "spam": {
+      "rejected": "Your request was rejected. Please reload the page and try again.",
+      "reload": "This page has expired. Please reload it and try again.",
+      "tooFast": "That was quick. Please wait a moment and send again.",
+      "links": "This paste consists mostly of links and looks like spam.",
+      "blob": "Encoded files and binary data, such as long base64 blocks, cannot be pasted.",
+      "duplicate": "The same content was pasted a short while ago.",
+      "rateLimit": "You have created many pastes in a short time. Please wait a while and try again.",
+      "dailyLimit": "You have reached the daily limit for new pastes. Please try again tomorrow.",
+      "captcha": "Please complete the spam check above the button.",
+      "captchaUnavailable": "The spam check is unavailable right now. Please try again in a moment."
+    }
   },
   "result": {
     "title": "Paste created",
@@ -167,7 +179,7 @@
     },
     "legalBasis": {
       "title": "6. Legal bases for processing",
-      "text": "We process your data on the following legal bases:\n• Art. 6 (1) (b) GDPR (contract performance) – for providing the paste service\n• Art. 6 (1) (f) GDPR (legitimate interest) – for rate limiting, abuse prevention and the secure operation of the website\n• Art. 6 (1) (c) GDPR (legal obligation) – where statutory retention or disclosure obligations apply"
+      "text": "We process your data on the following legal bases:\n• Art. 6 (1) (b) GDPR (contract performance) – for providing the paste service\n• Art. 6 (1) (f) GDPR (legitimate interest) – for rate limiting, the spam check (Cloudflare Turnstile, section 14), abuse prevention and the secure operation of the website\n• Art. 6 (1) (c) GDPR (legal obligation) – where statutory retention or disclosure obligations apply"
     },
     "cookies": {
       "title": "7. Cookies",
@@ -175,11 +187,11 @@
     },
     "tracking": {
       "title": "8. No tracking",
-      "text": "No analytics tools (Google Analytics, Plausible, Matomo, …) are used. No GeoIP resolution happens. No third-party scripts are loaded."
+      "text": "No analytics tools (Google Analytics, Plausible, Matomo, …) are used. No GeoIP resolution happens. Apart from the spam check on the page for creating a paste (section 14), no third-party scripts are loaded."
     },
     "retention": {
       "title": "9. Retention",
-      "text": "Pastes are automatically and permanently deleted after their chosen expiration window. \"Burn after read\" pastes are wiped immediately after the first successful view. You can delete a paste at any time using its delete token.\n\nIP hashes used for rate limiting are kept only briefly in memory and are automatically discarded after one hour.\n\nServer logs are deleted as soon as they are no longer required for the technical operation and security of the service."
+      "text": "Pastes are automatically and permanently deleted after their chosen expiration window. \"Burn after read\" pastes are wiped immediately after the first successful view. You can delete a paste at any time using its delete token.\n\nThe IP hash stored with a paste (section 5) is deleted together with the paste. It is used to limit how many pastes one address can create per day. For the hourly rate limit, IP hashes are also kept briefly in memory and discarded after one hour. To recognise repeated spam, a hash of the pasted content is kept in memory for 24 hours; it does not refer to you.\n\nServer logs are deleted as soon as they are no longer required for the technical operation and security of the service."
     },
     "rights": {
       "title": "10. Your rights",
@@ -198,8 +210,8 @@
       "text": "Passwords are stored as bcrypt hashes (cost factor 12) only. All connections are encrypted via HTTPS (TLS). The server runs with current security updates and a firewall in place."
     },
     "thirdParty": {
-      "title": "14. Webfonts & third parties",
-      "text": "Web fonts (Inter, JetBrains Mono) are bundled into the application at build time via Next.js's built-in font system (next/font) and served exclusively from this application's own origin. No connection to third-party servers (in particular Google Fonts) takes place at runtime.\n\nNo other external scripts, fonts or tracking services are loaded."
+      "title": "14. Web fonts, spam check & third parties",
+      "text": "Web fonts (Syne, DM Sans, JetBrains Mono) are bundled into the application at build time via Next.js's built-in font system (next/font) and served exclusively from this application's own origin. No connection to font providers takes place at runtime.\n\nSpam check: the page for creating a paste uses Cloudflare Turnstile, a service of Cloudflare, Inc. (101 Townsend St, San Francisco, CA 94107, USA), to tell people from automated requests. When that page is opened, your browser loads a script from challenges.cloudflare.com, and Turnstile evaluates technical data such as your IP address and properties of your browser. We only receive the result of the check. Turnstile is not loaded on pages that display a paste. Legal basis: Art. 6 (1) (f) GDPR, our legitimate interest in protecting the service against spam and abuse. Cloudflare is certified under the EU-US Data Privacy Framework; in addition, Standard Contractual Clauses apply. Cloudflare's privacy policy: https://www.cloudflare.com/privacypolicy/\n\nNo other external scripts, fonts or tracking services are loaded."
     },
     "contact": {
       "title": "15. Contact",

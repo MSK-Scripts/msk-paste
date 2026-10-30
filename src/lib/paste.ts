@@ -114,6 +114,19 @@ async function generateUniquePasteId(): Promise<string> {
   )
 }
 
+// ─── Volume per address ──────────────────────────────────────────────
+
+/** Pastes and bytes an address created in the last 24 hours. */
+export async function recentVolumeByIp(ipHash: Buffer): Promise<{ count: number; bytes: number }> {
+  const row = await queryOne<{ count: number | string; bytes: number | string | null }>(
+    `SELECT COUNT(*) AS count, COALESCE(SUM(size_bytes), 0) AS bytes
+       FROM pastes
+      WHERE created_ip_hash = ? AND created_at > NOW() - INTERVAL 1 DAY`,
+    [ipHash],
+  )
+  return { count: Number(row?.count ?? 0), bytes: Number(row?.bytes ?? 0) }
+}
+
 // ─── Read ─────────────────────────────────────────────────────────────
 
 export async function getPasteRow(pasteId: string): Promise<PasteRow | null> {

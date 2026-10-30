@@ -74,7 +74,19 @@
     "submit": "Paste erstellen",
     "submitting": "Wird erstellt…",
     "networkError": "Netzwerkfehler – bitte erneut versuchen",
-    "sizeUsed": "{bytes} / {max} Bytes"
+    "sizeUsed": "{bytes} / {max} Bytes",
+    "spam": {
+      "rejected": "Die Anfrage wurde abgelehnt. Bitte lade die Seite neu und versuche es noch einmal.",
+      "reload": "Die Seite ist abgelaufen. Bitte lade sie neu und versuche es noch einmal.",
+      "tooFast": "Das ging sehr schnell. Bitte warte einen Moment und sende noch einmal.",
+      "links": "Diese Paste besteht fast nur aus Links und sieht nach Spam aus.",
+      "blob": "Kodierte Dateien und Binärdaten wie lange Base64-Blöcke können nicht eingefügt werden.",
+      "duplicate": "Derselbe Inhalt wurde vor Kurzem schon eingefügt.",
+      "rateLimit": "Du hast in kurzer Zeit viele Pastes erstellt. Bitte warte eine Weile und versuche es dann noch einmal.",
+      "dailyLimit": "Du hast das Tageslimit für neue Pastes erreicht. Bitte versuche es morgen wieder.",
+      "captcha": "Bitte schließe die Spam-Prüfung über dem Button ab.",
+      "captchaUnavailable": "Die Spam-Prüfung ist gerade nicht erreichbar. Bitte versuche es gleich noch einmal."
+    }
   },
   "result": {
     "title": "Paste erstellt",
@@ -167,7 +179,7 @@
     },
     "legalBasis": {
       "title": "6. Rechtsgrundlagen der Verarbeitung",
-      "text": "Wir verarbeiten deine Daten auf folgenden Rechtsgrundlagen:\n• Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung) – für die Bereitstellung des Paste-Dienstes\n• Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse) – für Rate-Limiting, Missbrauchsbekämpfung und den sicheren Betrieb der Website\n• Art. 6 Abs. 1 lit. c DSGVO (rechtliche Verpflichtung) – sofern gesetzliche Aufbewahrungs- oder Auskunftspflichten bestehen"
+      "text": "Wir verarbeiten deine Daten auf folgenden Rechtsgrundlagen:\n• Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung) – für die Bereitstellung des Paste-Dienstes\n• Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse) – für Rate-Limiting, die Spam-Prüfung (Cloudflare Turnstile, Abschnitt 14), Missbrauchsbekämpfung und den sicheren Betrieb der Website\n• Art. 6 Abs. 1 lit. c DSGVO (rechtliche Verpflichtung) – sofern gesetzliche Aufbewahrungs- oder Auskunftspflichten bestehen"
     },
     "cookies": {
       "title": "7. Cookies",
@@ -175,11 +187,11 @@
     },
     "tracking": {
       "title": "8. Kein Tracking",
-      "text": "Es werden keine Analyse-Tools (Google Analytics, Plausible, Matomo o. ä.) verwendet. Es findet keine GeoIP-Auflösung statt. Es werden keine Drittanbieter-Skripte geladen."
+      "text": "Es werden keine Analyse-Tools (Google Analytics, Plausible, Matomo o. ä.) verwendet. Es findet keine GeoIP-Auflösung statt. Abgesehen von der Spam-Prüfung auf der Seite zum Erstellen einer Paste (Abschnitt 14) werden keine Drittanbieter-Skripte geladen."
     },
     "retention": {
       "title": "9. Speicherdauer",
-      "text": "Pastes werden nach Ablauf des gewählten Zeitraums automatisch und unwiderruflich gelöscht. „Burn after read“-Pastes werden direkt nach dem ersten Aufruf entfernt. Du kannst eine Paste jederzeit mit deinem Lösch-Token vorzeitig löschen.\n\nIP-Hashes für Rate-Limiting werden nur kurzzeitig im Arbeitsspeicher gehalten und automatisch nach 1 Stunde verworfen.\n\nServer-Logs werden gelöscht, sobald sie zur technischen Bereitstellung und Sicherheit nicht mehr erforderlich sind."
+      "text": "Pastes werden nach Ablauf des gewählten Zeitraums automatisch und unwiderruflich gelöscht. „Burn after read“-Pastes werden direkt nach dem ersten Aufruf entfernt. Du kannst eine Paste jederzeit mit deinem Lösch-Token vorzeitig löschen.\n\nDer mit einer Paste gespeicherte IP-Hash (Abschnitt 5) wird zusammen mit der Paste gelöscht. Er dient dazu, die Zahl der Pastes je Adresse und Tag zu begrenzen. Für das stündliche Rate-Limit werden IP-Hashes außerdem kurz im Arbeitsspeicher gehalten und nach 1 Stunde verworfen. Um wiederholten Spam zu erkennen, wird ein Hash des eingefügten Inhalts 24 Stunden im Arbeitsspeicher gehalten; er bezieht sich nicht auf deine Person.\n\nServer-Logs werden gelöscht, sobald sie zur technischen Bereitstellung und Sicherheit nicht mehr erforderlich sind."
     },
     "rights": {
       "title": "10. Deine Rechte",
@@ -198,8 +210,8 @@
       "text": "Passwörter werden ausschließlich als bcrypt-Hash (Cost-Faktor 12) gespeichert. Die Verbindung erfolgt verschlüsselt via HTTPS (TLS). Der Server ist mit aktuellen Sicherheits-Updates versehen, eine Firewall ist aktiv."
     },
     "thirdParty": {
-      "title": "14. Schriftarten & Drittanbieter",
-      "text": "Schriftarten (Inter, JetBrains Mono) werden über das in Next.js integrierte Font-System (next/font) bereits zur Build-Zeit lokal in den Build der Anwendung aufgenommen und anschließend ausschließlich vom eigenen Server ausgeliefert. Zur Laufzeit findet keine Verbindung zu Servern Dritter (insbesondere Google Fonts) statt.\n\nEs werden keine weiteren externen Skripte, Schriften oder Tracking-Dienste geladen."
+      "title": "14. Schriftarten, Spam-Prüfung & Drittanbieter",
+      "text": "Schriftarten (Syne, DM Sans, JetBrains Mono) werden über das in Next.js integrierte Font-System (next/font) bereits zur Build-Zeit in die Anwendung aufgenommen und ausschließlich vom eigenen Server ausgeliefert. Zur Laufzeit findet keine Verbindung zu Schriftanbietern statt.\n\nSpam-Prüfung: Die Seite zum Erstellen einer Paste nutzt Cloudflare Turnstile, einen Dienst der Cloudflare, Inc. (101 Townsend St, San Francisco, CA 94107, USA), um Menschen von automatisierten Anfragen zu unterscheiden. Beim Aufruf dieser Seite lädt dein Browser ein Skript von challenges.cloudflare.com, und Turnstile wertet technische Daten wie deine IP-Adresse und Eigenschaften deines Browsers aus. Wir erhalten nur das Ergebnis der Prüfung. Auf Seiten, die eine Paste anzeigen, wird Turnstile nicht geladen. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO, unser berechtigtes Interesse am Schutz des Dienstes vor Spam und Missbrauch. Cloudflare ist unter dem EU-US Data Privacy Framework zertifiziert; zusätzlich gelten Standardvertragsklauseln. Datenschutzerklärung von Cloudflare: https://www.cloudflare.com/privacypolicy/\n\nEs werden keine weiteren externen Skripte, Schriften oder Tracking-Dienste geladen."
     },
     "contact": {
       "title": "15. Kontakt",

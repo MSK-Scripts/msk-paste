@@ -1,0 +1,61 @@
+# =============================================================================
+# Build
+# -----------------------------------------------------------------------------
+# Type-checks, tests and compiles the app the same way the deploy workflow
+# does, but on every pull request. Without it a change that breaks the build
+# only shows up after the merge, when deploy.yml runs on main.
+#
+# No repository secrets are used on purpose. Pull requests from bots run in a
+# context where secrets are empty, and a job that needs them fails there every
+# time. The dummy values below are enough to compile: every route is rendered
+# on demand, so nothing touches the database at build time.
+# =============================================================================
+
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type-check
+        run: npm run type-check
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        env:
+          NEXT_PUBLIC_BASE_URL: http://localhost:3012
+          DB_HOST: build-dummy
+          DB_USER: build-dummy
+          DB_PASSWORD: build-dummy
+          DB_NAME: build-dummy
+          IP_HASH_SECRET: build-dummy-secret-do-not-use
+        run: npm run build

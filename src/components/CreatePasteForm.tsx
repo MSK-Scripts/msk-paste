@@ -1,17 +1,50 @@
 'use client'
 
-import { useMemo, useState, FormEvent } from 'react'
+import { useCallback, useMemo, useState, FormEvent } from 'react'
 import { useTranslations } from 'next-intl'
 import type { ApiError, CreatePasteResponse, ExpiresIn } from '@/types'
 import { SUPPORTED_LANGUAGES } from '@/lib/languages'
 import { PasteResult } from './PasteResult'
+import { TurnstileWidget } from './TurnstileWidget'
 
 const MAX_BYTES = 1_048_576 // 1 MB (kept in sync with .env)
 const EXPIRES_IN_OPTIONS: ExpiresIn[] = ['10min', '1h', '1d', '1w', '1mo', '1y']
 const DEFAULT_EXPIRES: ExpiresIn = '1w'
 
-export function CreatePasteForm() {
+/** Must match TURNSTILE_ACTION in src/lib/turnstile.ts. */
+const TURNSTILE_ACTION = 'create-paste'
+
+/** Spam guard codes (src/lib/spamGuard.ts) and their message keys. */
+const GUARD_MESSAGES: Record<string, string> = {
+  'origin':              'rejected',
+  'rejected':            'rejected',
+  'api-key-required':    'rejected',
+  'stamp-invalid':       'reload',
+  'stamp-expired':       'reload',
+  'too-fast':            'tooFast',
+  'links':               'links',
+  'blob':                'blob',
+  'duplicate':           'duplicate',
+  'rate-limit':          'rateLimit',
+  'daily-limit':         'dailyLimit',
+  'captcha':             'captcha',
+  'captcha-unavailable': 'captchaUnavailable',
+}
+
+/** After these the token may be spent, so the widget gets a fresh one. */
+const RENEW_CAPTCHA = new Set(['captcha', 'captcha-unavailable'])
+
+export function CreatePasteForm({
+  siteKey,
+  formStamp,
+}: {
+  /** Turnstile site key, null where no captcha is configured (development). */
+  siteKey:   string | null
+  /** Signed render time, see src/lib/formStamp.ts. */
+  formStamp: string
+}) {
   const t       = useTranslations('createForm')
+  const tSpam   = useTranslations('createForm.spam')
   const tCommon = useTranslations('common')
   const tl      = useTranslations('languages')
 
@@ -23,6 +56,16 @@ export function CreatePasteForm() {
   const [password,      setPassword]      = useState('')
   const [burnAfterRead, setBurnAfterRead] = useState(false)
   const [customId,      setCustomId]      = useState('')
+  const [website,       setWebsite]       = useState('')
+
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null)
+  const [captchaKey,   setCaptchaKey]   = useState(0)
+  const onCaptchaToken = useCallback((token: string | null) => setCaptchaToken(token), [])
+
+  function renewCaptcha() {
+    setCaptchaToken(null)
+    setCaptchaKey((k) => k + 1)
+  }
 
   const [showAdvanced, setShowAdvanced] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
@@ -56,6 +99,9 @@ export function CreatePasteForm() {
           password:      password || undefined,
           burnAfterRead,
           customId:      customId.trim() || undefined,
+          website,
+          formStamp,
+          turnstileToken: captchaToken ?? undefined,
         }),
       })
 
@@ -63,8 +109,10 @@ export function CreatePasteForm() {
 
       if (!res.ok) {
         const err = data as ApiError
-        setError(err.error)
+        const key = err.code ? GUARD_MESSAGES[err.code] : undefined
+        setError(key ? tSpam(key) : err.error)
         if (err.details) setFieldErrors(err.details)
+        if (res.status >= 500 || (err.code && RENEW_CAPTCHA.has(err.code))) renewCaptcha()
         return
       }
 
@@ -89,6 +137,8 @@ export function CreatePasteForm() {
     setShowPassword(false)
     setError(null)
     setFieldErrors({})
+    // The last token was spent on the paste just created.
+    renewCaptcha()
   }
 
   if (result) {
@@ -291,15 +341,39 @@ export function CreatePasteForm() {
         </div>
       )}
 
+      {/* A field people never see (off-screen, out of the tab order); bots fill it. */}
+      <div aria-hidden="true" className="absolute -left-[10000px] top-auto w-px h-px overflow-hidden">
+        <label>
+          Website
+          <input
+            type="text"
+            name="website"
+            tabIndex={-1}
+            autoComplete="off"
+            value={website}
+            onChange={(e) => setWebsite(e.target.value)}
+          />
+        </label>
+      </div>
+
+      {siteKey && (
+        <TurnstileWidget
+          key={captchaKey}
+          siteKey={siteKey}
+          action={TURNSTILE_ACTION}
+          onToken={onCaptchaToken}
+        />
+      )}
+
       {error && (
-        <div className="px-4 py-3 bg-msk-danger/10 border border-msk-danger/30 rounded-lg text-sm text-msk-danger animate-fade-in">
+        <div role="alert" className="px-4 py-3 bg-msk-danger/10 border border-msk-danger/30 rounded-lg text-sm text-msk-danger animate-fade-in">
           {error}
         </div>
       )}
 
       <button
         type="submit"
-        disabled={isLoading || !content.trim() || usedBytes > MAX_BYTES}
+        disabled={isLoading || !content.trim() || usedBytes > MAX_BYTES || (siteKey !== null && !captchaToken)}
         className="w-full px-6 py-3.5 bg-msk-accent hover:bg-msk-hover disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
       >
         {isLoading ? (

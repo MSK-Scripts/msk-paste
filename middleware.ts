@@ -34,6 +34,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 // keinen gültigen Nonce, weil der pro Antwort wechselt.
 
 const isDev = process.env.NODE_ENV === 'development'
+const TURNSTILE = 'https://challenges.cloudflare.com'
 
 export function middleware(request: NextRequest) {
   // In der Entwicklung kein Nonce: Nexts React Refresh lädt seinen
@@ -51,9 +52,12 @@ export function middleware(request: NextRequest) {
     // 'none' als Default: jede benutzte Kategorie muss unten explizit stehen.
     "default-src 'none'",
 
+    // challenges.cloudflare.com: Cloudflare Turnstile on the create form. With
+    // 'strict-dynamic' the nonce on its <script> is what counts; the host is
+    // for browsers without CSP 3.
     nonce
-      ? `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'`
-      : "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+      ? `script-src 'self' 'nonce-${nonce}' 'strict-dynamic' ${TURNSTILE}`
+      : `script-src 'self' 'unsafe-inline' 'unsafe-eval' ${TURNSTILE}`,
 
     // Next hängt den Nonce automatisch an seine eigenen inline <style>-Tags
     // (next/font, Critical CSS), sobald er im Request-Header steht.
@@ -68,7 +72,9 @@ export function middleware(request: NextRequest) {
 
     "img-src 'self' data: blob:",
     "font-src 'self'",
-    `connect-src 'self'${isDev ? ' ws: wss:' : ''}`,
+    `connect-src 'self' ${TURNSTILE}${isDev ? ' ws: wss:' : ''}`,
+    // The Turnstile challenge runs in an iframe of its own.
+    `frame-src ${TURNSTILE}`,
     // Next benutzt blob:-Worker für sein Streaming-Hydration-System.
     "worker-src 'self' blob:",
     "media-src 'self'",

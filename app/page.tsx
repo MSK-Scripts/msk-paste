@@ -1,10 +1,19 @@
+import Script from 'next/script'
+import { headers } from 'next/headers'
 import { getTranslations } from 'next-intl/server'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { CreatePasteForm } from '@/components/CreatePasteForm'
+import { issueFormStamp } from '@/lib/formStamp'
+import { turnstileSiteKey } from '@/lib/turnstile'
+
+// Every render carries a fresh form stamp.
+export const dynamic = 'force-dynamic'
 
 export default async function HomePage() {
-  const t = await getTranslations('home')
+  const t       = await getTranslations('home')
+  const nonce   = (await headers()).get('x-nonce') ?? undefined
+  const siteKey = turnstileSiteKey()
 
   return (
     <main className="min-h-screen flex flex-col">
@@ -19,11 +28,19 @@ export default async function HomePage() {
             <p className="text-msk-muted text-sm sm:text-base mt-3">{t('subtitle')}</p>
           </div>
 
-          <CreatePasteForm />
+          <CreatePasteForm siteKey={siteKey} formStamp={issueFormStamp()} />
         </div>
       </div>
 
       <Footer />
+
+      {siteKey && (
+        <Script
+          src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
+          strategy="afterInteractive"
+          nonce={nonce}
+        />
+      )}
     </main>
   )
 }

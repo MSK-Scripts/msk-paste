@@ -3,6 +3,8 @@
  */
 export type ApiError = {
   error:    string
+  /** Machine-readable reason when the spam guard turns a request down. */
+  code?:    string
   details?: Record<string, string[]>
 }
 

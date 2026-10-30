@@ -27,7 +27,9 @@
 
 ## 🛡️ Privacy & Security
 
-- **No tracking, no analytics, no third-party scripts** other than Google Fonts.
+- **No tracking, no analytics.** The only third-party script is Cloudflare Turnstile on the create page.
+- **Spam protection:** Turnstile, a honeypot, a signed form timestamp, daily limits per address and
+  content checks (encoded files, link spam, repeats). Scripts need an API key.
 - **IPs are never stored.** Rate limiting uses HMAC-SHA-256(ip, secret).
 - **Passwords** are stored as bcrypt hashes (cost 12) only.
 - **Expired pastes are deleted**, not soft-deleted.
@@ -82,10 +84,14 @@ Details: [`deployment/README.md`](deployment/README.md).
 
 ## 📡 REST API
 
+Reading is open. Creating a paste from a script needs an API key, issued by the operator on the
+server (see [API keys](#-api-keys)); without one, `POST /api/pastes` only accepts the site's own form.
+
 ### `POST /api/pastes`
 
 ```bash
 curl -X POST https://paste.msk-scripts.de/api/pastes \
+  -H 'Authorization: Bearer mskp_…' \
   -H 'Content-Type: application/json' \
   -d '{
     "content":       "console.log(\"hello world\")",
@@ -112,7 +118,7 @@ Response:
 
 | Method   | Path                          | Purpose                              |
 |----------|-------------------------------|--------------------------------------|
-| `POST`   | `/api/pastes`                 | Create a paste                       |
+| `POST`   | `/api/pastes`                 | Create a paste (API key required)    |
 | `GET`    | `/api/pastes/:id`             | Fetch paste metadata + content       |
 | `POST`   | `/api/pastes/:id/verify`      | Verify password, returns content     |
 | `DELETE` | `/api/pastes/:id?token=…`     | Delete a paste with its delete token |
@@ -129,6 +135,20 @@ npm run lint         # ESLint
 npm run type-check   # TypeScript --noEmit
 npm run migrate      # Apply DB migrations
 npm run cleanup      # Delete expired pastes (run via cron)
+npm run api-key -- help   # Manage API keys (see below)
+```
+
+## 🔑 API keys
+
+Only someone with a shell on the server and read access to the app's `.env` can manage keys. A key is
+shown once when it is created; the database keeps only a scrypt hash of it.
+
+```bash
+/opt/msk-paste/scripts/api-key.sh help                     # all commands
+/opt/msk-paste/scripts/api-key.sh list                     # id, prefix, label, last use, state
+/opt/msk-paste/scripts/api-key.sh create "<label>"         # issue a key
+/opt/msk-paste/scripts/api-key.sh revoke <key|prefix|id>   # block it, keep the row
+/opt/msk-paste/scripts/api-key.sh delete <key|prefix|id>   # remove it
 ```
 
 ## 📜 License

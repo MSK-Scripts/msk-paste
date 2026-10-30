@@ -1,4 +1,5 @@
 import { createHash } from 'crypto'
+import { isIP } from 'net'
 import { envInt } from './env'
 
 // ─── In-memory rate limit (suitable for single-server setups) ─────────
@@ -87,18 +88,22 @@ export function checkCreateRateLimit(ipHash: string) {
 }
 
 /**
- * Extracts the real client IP from request headers.
- * Honours Apache2 reverse proxy headers (X-Forwarded-For, X-Real-IP)
- * and Cloudflare (CF-Connecting-IP).
+ * The client's address as Apache saw it.
+ *
+ * The app listens on 127.0.0.1 behind Apache, which sets X-Real-IP from the
+ * connection's address (`RequestHeader set` replaces whatever a client sent)
+ * and appends that same address to X-Forwarded-For. So X-Real-IP comes
+ * first, then the LAST X-Forwarded-For entry. Never CF-Connecting-IP or the
+ * first X-Forwarded-For entry: the site is not behind Cloudflare and both are
+ * written by the client, which let a script pick a new "address" per request
+ * and walk around every limit.
  */
 export function getClientIp(headers: { get(name: string): string | null }): string {
-  const xff    = headers.get('x-forwarded-for')
-  const realIp = headers.get('x-real-ip')
-  const cfIp   = headers.get('cf-connecting-ip')
+  const realIp = headers.get('x-real-ip')?.trim()
+  if (realIp && isIP(realIp)) return realIp
 
-  if (cfIp)   return cfIp.trim()
-  if (xff)    return xff.split(',')[0]!.trim()
-  if (realIp) return realIp.trim()
+  const lastForwarded = headers.get('x-forwarded-for')?.split(',').pop()?.trim()
+  if (lastForwarded && isIP(lastForwarded)) return lastForwarded
 
   return '0.0.0.0'
 }
