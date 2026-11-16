@@ -8,6 +8,13 @@ on:
 permissions:
   contents: read
 
+# One deploy at a time per repository. A newer push replaces a pending run,
+# but a running deploy is never interrupted, so the server is never left
+# half updated. Several merges in a row end up as at most two deploys.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
 jobs:
   deploy:
     name: Build & Deploy
