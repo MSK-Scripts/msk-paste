@@ -1,4 +1,5 @@
 import { headers } from 'next/headers'
+import { notFound } from 'next/navigation'
 import { SiteFrame } from '@/components/site/SiteFrame'
 import { PasteView } from '@/components/PasteView'
 import { PasswordPrompt } from '@/components/PasswordPrompt'
@@ -25,14 +26,11 @@ interface PageProps {
 export default async function PastePage({ params }: PageProps) {
   const { id } = await params
 
+  // An unknown ID answers 404 through app/not-found.tsx, which shows the same
+  // panel. Rendering the panel here answered 200, so /robots.txt and every
+  // mistyped link looked like a real page ("Paste robots.txt") to a crawler.
   const row = await getPasteRow(id)
-  if (!row) {
-    return (
-      <Page>
-        <StatusPanel variant="notFound" />
-      </Page>
-    )
-  }
+  if (!row) notFound()
 
   if (isPasteExpired(row)) {
     return (
