@@ -6,8 +6,8 @@ import { HeaderBar } from './HeaderBar'
 import { aboutLink, productLines, sectionLinks, type SiteCopy } from './navigation'
 
 const COPY_KEYS = [
-  'mainNav', 'submenu', 'newTab', 'menu', 'language', 'fivem', 'fivemPaid', 'fivemPaidDesc',
-  'fivemFree', 'fivemFreeDesc', 'fivemAllAccess', 'fivemAllAccessDesc', 'fivemStats',
+  'mainNav', 'submenu', 'newTab', 'menu', 'language', 'fivem',
+  'fivemFree', 'fivemFreeDesc', 'fivemStats',
   'fivemStatsDesc', 'discord', 'ticketDesc', 'giveawayDesc', 'tools', 'images', 'imagesDesc',
   'formsDesc', 'pasteDesc', 'shortenerDesc', 'about', 'stats',
 ] as const satisfies readonly (keyof SiteCopy)[]

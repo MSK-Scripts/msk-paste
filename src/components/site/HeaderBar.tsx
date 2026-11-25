@@ -195,10 +195,14 @@ export function HeaderBar({
     <header ref={headerRef} className="sticky top-0 z-50 border-t-4 border-b border-t-brand border-b-border bg-card">
       <div className="container-page flex min-h-[var(--header-height)] items-center gap-[clamp(1rem,2vw,2.5rem)]">
         <Link href="/" className="flex min-h-11 shrink-0 items-center gap-2.5 text-foreground">
-          <Image src="/logo.png" alt="" width={36} height={36} loading="eager" className="h-9 w-9 rounded-lg object-contain" />
-          {/* Below 360 px the name gives way to the buttons; it stays the
-              link's name for a screen reader. */}
-          <span className="sr-only font-display text-lead font-bold tracking-[-0.01em] [font-stretch:108%] min-[360px]:not-sr-only">
+          <Image src="/logo.png" alt={TOOL.name} width={36} height={36} loading="eager" className="h-9 w-9 rounded-lg object-contain" />
+          {/* The logo carries the link's name, so a screen reader hears it
+              once and it stays there below 360 px, where the written name
+              gives way to the buttons. */}
+          <span
+            aria-hidden="true"
+            className="hidden font-display text-lead font-bold tracking-[-0.01em] [font-stretch:108%] min-[360px]:inline"
+          >
             {TOOL.name}
           </span>
         </Link>

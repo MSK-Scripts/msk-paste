@@ -7,6 +7,15 @@ import { getGlobalStats } from '@/lib/stats'
 // Always fetch the latest numbers — caching happens in the API layer.
 export const dynamic = 'force-dynamic'
 
+export async function generateMetadata() {
+  const t = await getTranslations('stats')
+  return {
+    title:       t('metaTitle'),
+    description: t('metaDescription'),
+    alternates:  { canonical: '/stats' },
+  }
+}
+
 export default async function StatsPage() {
   const t = await getTranslations('stats')
 
