@@ -20,6 +20,15 @@ const SECTIONS = [
   'contact',
 ] as const
 
+export async function generateMetadata() {
+  const t = await getTranslations('privacy')
+  return {
+    title:       t('metaTitle'),
+    description: t('metaDescription'),
+    alternates:  { canonical: '/privacy' },
+  }
+}
+
 export default async function PrivacyPage() {
   const t = await getTranslations('privacy')
 

@@ -15,7 +15,7 @@ import { ThemeProvider } from '@/components/theme/ThemeProvider'
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL ?? 'https://paste.msk-scripts.de'),
   title: {
-    default:  'MSK Paste – Self-hosted Pastebin',
+    default:  'MSK Paste: pastebin with syntax highlighting',
     template: '%s | MSK Paste',
   },
   description:

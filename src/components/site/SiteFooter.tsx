@@ -37,7 +37,7 @@ export async function SiteFooter() {
       title: t('footerProduct'),
       links: [
         { label: t('stats'), href: '/stats' },
-        { label: t('documentation'), href: 'https://docu.msk-scripts.de/paste' },
+        { label: t('documentation'), href: 'https://docu.msk-scripts.de/ecosystem/msk-paste/' },
         { label: t('github'), href: 'https://github.com/MSK-Scripts/msk-paste' },
       ],
     },
@@ -118,7 +118,7 @@ export async function SiteFooter() {
           <span>
             {t('builtBy')}{' '}
             <a
-              href="https://www.musiker15.de"
+              href={`https://www.musiker15.de/${locale === 'de' ? 'de' : 'en'}`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex min-h-11 items-center underline-offset-4 hover:text-band-foreground hover:underline"

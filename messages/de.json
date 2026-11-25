@@ -14,6 +14,8 @@
     "optional": "optional"
   },
   "imprintPage": {
+    "metaTitle": "Impressum und Kontakt",
+    "metaDescription": "Impressum von MSK Paste, einem Dienst von MSK Scripts: Anbieter nach § 5 DDG, Anschrift und Kontakt.",
     "title": "Impressum",
     "section1Title": "Angaben gemäß § 5 DDG",
     "addressName": "Moritz Kohm",
@@ -155,6 +157,8 @@
     "backHome": "Zurück zur Startseite"
   },
   "stats": {
+    "metaTitle": "Statistik aller Pastes",
+    "metaDescription": "Globale Auswertung über alle Pastes von MSK Paste: Pastes insgesamt, heute und in dieser Woche, dazu die meistgenutzten Programmiersprachen.",
     "title": "Statistik",
     "subtitle": "Globale Auswertung über alle Pastes.",
     "totalPastes": "Pastes insgesamt",
@@ -164,6 +168,8 @@
     "noData": "Noch keine Daten verfügbar"
   },
   "privacy": {
+    "metaTitle": "Datenschutzerklärung",
+    "metaDescription": "Wie MSK Paste mit Daten umgeht: was beim Erstellen einer Paste gespeichert wird, wann es gelöscht wird, kein Tracking, und deine Rechte nach der DSGVO.",
     "title": "Datenschutzerklärung",
     "lastUpdated": "Stand: {date}",
     "intro": {
@@ -278,12 +284,8 @@
     "submenu": "Mehr unter {name}",
     "newTab": "(öffnet in neuem Tab)",
     "fivem": "FiveM-Scripts",
-    "fivemPaid": "Bezahl-Scripts",
-    "fivemPaidDesc": "Jedes Script als Encrypted oder Source",
     "fivemFree": "Kostenlose Scripts",
     "fivemFreeDesc": "Open Source auf GitHub, samt msk_core",
-    "fivemAllAccess": "Alle Scripts im Abo",
-    "fivemAllAccessDesc": "Zugriff auf sämtliche Ressourcen, monatlich kündbar",
     "fivemStats": "Serverstatistiken",
     "fivemStatsDesc": "Live-Serverzahlen je Script",
     "discord": "Discord-Bots",
